@@ -1,35 +1,17 @@
-#
-#  Copyright (c) 2023 Helmut Merz helmutm@cy55.de
-#
-#  This program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-#
+# cco.member.auth
 
-"""
-Specialized authentication components.
+""" Specialized authentication components.
 """
 
 import hashlib
 import logging
 import random
 from datetime import datetime, timedelta
-from email.MIMEText import MIMEText
-from urllib import urlencode
+from email.mime.text import MIMEText
+from urllib.parse import urlencode
 import requests
 
-from zope.app.component import hooks
-from zope.interface import Interface, implements
+from zope.component import hooks
 from zope import component
 from zope.pluggableauth.interfaces import IAuthenticatedPrincipalFactory
 from zope.pluggableauth.plugins.session import SessionCredentialsPlugin \
@@ -88,14 +70,13 @@ class TwoFactorSessionCredentials(SessionCredentials):
         self.password = password
         self.tan = random.randint(100000, 999999)
         self.timestamp = datetime.now()
-        rng = range(len(str(self.tan)))
+        rng = list(range(len(str(self.tan))))
         t1 = random.choice(rng)
         rng.remove(t1)
         t2 = random.choice(rng)
         self.tanA, self.tanB = sorted((t1, t2))
-        self.hash = (hashlib.
-                        sha224("%s:%s:%s" % (login, password, self.tan)).
-                        hexdigest())
+        credstr = '%s:%s:%s' % (login, password, self.tan)
+        self.hash = hashlib.sha224(credstr.encode('UTF-8')).hexdigest()
         self.validated = False
 
 
@@ -233,7 +214,7 @@ class SessionCredentialsPlugin(BaseSessionCredentialsPlugin):
         credentials = sessionData.get('credentials')
         if not credentials:
             msg = 'Missing credentials'
-            return log.warn(msg)
+            return log.warning(msg)
         log.info("Processing phase 2, TAN: %s. " % credentials.tan)
         if credentials.hash != hash:
             msg = 'Illegal hash.'

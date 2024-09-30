@@ -1,6 +1,6 @@
 # Introduction
 
-This is the main part of the code of the semantic 
+This project contains extension packages for the
 web application platform *loops*, based on 
 Zope 3 / bluebream.
 
