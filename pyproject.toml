@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "loops-ext"
+version = "3.0.1"
+description = "extensions for the loops web application platform"
+readme = "README.md"
+license = {text = "MIT"}
+keywords = ["loops"]
+authors = [{name = "Helmut Merz", email = "helmutm@cy55.de"}]
+
+dependencies = [
+	"loops"
+]
+
+[project.optional-dependencies]
+
+test = ["zope.testrunner"]
+
+[tool.setuptools]
+packages = ["cco"]

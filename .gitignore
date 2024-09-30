@@ -1,0 +1,12 @@
+*.pyc
+*.pyo
+*.swp
+dist/
+var/
+*.egg-info
+*.project
+*.pydevproject
+*.ropeproject
+*.sublime-project
+*.sublime-workspace
+.settings

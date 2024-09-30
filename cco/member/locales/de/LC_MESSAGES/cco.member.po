@@ -1,0 +1,121 @@
+msgid ""
+msgstr ""
+
+"Project-Id-Version: 1.0\n"
+"POT-Creation-Date: 2015-11-23 12:00 CET\n"
+"PO-Revision-Date: 2020-03-24 12:00+0100\n"
+"Last-Translator: Helmut Merz <helmutm@cy55.de>\n"
+"Language-Team: STEG developers <helmutm@cy55.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: sublime_text\n"
+
+# authentication
+
+msgid "title_login"
+msgstr "Anmeldung"
+
+msgid "description_login"
+msgstr "Bitte geben Sie ihre Anmeldedaten ein"
+
+msgid "label_login"
+msgstr "Benutzername"
+
+msgid "label_password"
+msgstr "Passwort"
+
+msgid "button_login"
+msgstr "Anmelden"
+
+msgid "button_login_2factor"
+msgstr "Daten eingeben"
+
+msgid "title_login_tan"
+msgstr "Anmeldung: TAN-Eingabe"
+
+msgid "message_enter_tan_digits_$email_$a_$b"
+msgstr "Ein E-Mail mit einer Transaktionsnummer (TAN) wurde an die Adresse $email gesendet. Bitte geben Sie die $a. und die $b. Ziffer dieser TAN in die untenstehenden Felder ein."
+
+msgid "tan_mail_subject"
+msgstr "Ihre TAN für den Zugang"
+
+msgid "tan_mail_text_$tan"
+msgstr "TAN: $tan"
+
+msgid "label_tan_$a"
+msgstr "TAN Ziffer $a"
+
+msgid "label_tan_$b"
+msgstr "TAN Ziffer $b"
+
+msgid "button_login_tan"
+msgstr "Anmelden"
+
+msgid "Invalid login data!"
+msgstr "Ungültige Anmeldedaten!"
+
+# change password
+
+msgid "label_change_password"
+msgstr "Passwort ändern"
+
+msgid "label_old_password"
+msgstr "Altes Passwort"
+
+msgid "desc_old_password"
+msgstr "Bitte geben Sie Ihr bisheriges Passwort ein."
+
+msgid "label_new_password"
+msgstr "Neues Passwort"
+
+msgid "desc_new_password"
+msgstr "Bitte geben Sie das gewünschte neue Passwort ein."
+
+msgid "label_confirm_new_password"
+msgstr "Neues Passwort wiederholen"
+
+msgid "desc_confirm_new_password"
+msgstr "Bitte wiederholen Sie das neue Passwort."
+
+msgid "message_password_changed"
+msgstr "Ihr Passwort wurde geändert. Bitte melden Sie sich mit Ihrem neuen Passwort an."
+
+msgid "error_password_wrong_oldpw"
+msgstr "Das eingegebene alte Passwort ist nicht korrekt."
+
+msgid "error_password_confirm_nomatch"
+msgstr "Passwort und Passwort-Wiederholung stimmen nicht überein."
+
+msgid "error_password_invalid_pw"
+msgstr "Das eingegebene Passwort entspricht nicht den Anforderungen an ein sicheres Passwort: mindestens acht Zeichen, Groß- und Kleinbuchstaben, mindestens eine Ziffer oder ein Sonderzeichen."
+
+# password reset
+msgid "pw_reset_mail_text_$link"
+msgstr ""
+"Bitte nutzen Sie folgenden Link für um Ihr Passwort zurückzusetzen:<br />"
+"<a href=\"$link\">Passwort zurücksetzen</a>"
+
+msgid "pw_reset_mail_subject_$domain"
+msgstr "Ihre Passwort zurücksetzen Anforderung auf $domain"
+
+msgid "message_password_reset_successfully"
+msgstr "Ihr Passwort wurde erfolgreich zurückgesetzt. Sie können sich ab sofort mit Ihrem neuen Passwort einloggen."
+
+msgid "message_password_reset_mail"
+msgstr "Sie erhalten zeitnah eine E-Mail mit dem Passwort Reset Link."
+
+msgid "label_reset_password"
+msgstr "Passwort (zurück)setzen"
+
+msgid "error_username_invalid"
+msgstr "Ungültiger Benutzername/ E-Mail"
+
+msgid "error_reset_token_invalid"
+msgstr "Reset Token ungültig/ abgelaufen"
+
+msgid "label_username"
+msgstr "Benutzername/ E-Mail"
+
+msgid "label_forgot_password"
+msgstr "Passwort vergessen?"
