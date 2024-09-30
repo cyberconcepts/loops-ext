@@ -1,0 +1,102 @@
+<configure
+   xmlns:zope="http://namespaces.zope.org/zope"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="cyberapps.knowledge">
+
+  <browser:resource name="cyberapps.knowledge.css" file="knowledge.css" />
+
+  <zope:adapter
+        name="jobpositions.html"
+        for="loops.interfaces.IConcept
+             zope.publisher.interfaces.browser.IBrowserRequest"
+        provides="zope.interface.Interface"
+        factory="cyberapps.knowledge.browser.qualification.JobPositionsOverview"
+        permission="zope.View" />
+
+  <zope:adapter
+        name="jobpersons.html"
+        for="loops.interfaces.IConcept
+             zope.publisher.interfaces.browser.IBrowserRequest"
+        provides="zope.interface.Interface"
+        factory="cyberapps.knowledge.browser.person.JobPersonsOverview"
+        permission="zope.View" />
+
+  <browser:page 
+        name="del_jobposition"
+        for="loops.interfaces.IConceptSchema"
+        class="cyberapps.knowledge.browser.qualification.DeleteJobPosition"
+        permission="zope.View" />
+
+  <browser:page 
+        name="copy_jpprofiles"
+        for="loops.interfaces.IConceptSchema"
+        class="cyberapps.knowledge.browser.qualification.CopyJPProfiles"
+        permission="zope.View" />
+
+  <browser:page 
+        name="edit_jpdescription.html"
+        for="loops.interfaces.IConceptSchema"
+        class="cyberapps.knowledge.browser.qualification.JPDescForm"
+        permission="zope.View" />
+
+  <browser:page 
+        name="edit_ipskillsreq.html"
+        for="loops.interfaces.IConceptSchema"
+        class="cyberapps.knowledge.browser.qualification.IPSkillsForm"
+        permission="zope.View" />
+
+  <browser:page 
+        name="edit_qualificationsreq.html"
+        for="loops.interfaces.IConceptSchema"
+        class="cyberapps.knowledge.browser.qualification.QualificationsForm"
+        permission="zope.View" />
+
+  <browser:page 
+        name="edit_jobassignments.html"
+        for="loops.interfaces.IConceptSchema"
+        class="cyberapps.knowledge.browser.person.JobAssignmentsForm"
+        permission="zope.View" />
+
+  <browser:page 
+        name="edit_qualifications.html"
+        for="loops.interfaces.IConceptSchema"
+        class="cyberapps.knowledge.browser.person.QualificationsForm"
+        permission="zope.View" />
+
+  <browser:page 
+        name="edit_skills.html"
+        for="loops.interfaces.IConceptSchema"
+        class="cyberapps.knowledge.browser.person.SkillsForm"
+        permission="zope.View" />
+
+  <zope:adapter
+        name="jobslisting.html"
+        for="loops.interfaces.IConcept
+             zope.publisher.interfaces.browser.IBrowserRequest"
+        provides="zope.interface.Interface"
+        factory="cyberapps.knowledge.browser.report.JobsListing"
+        permission="zope.View" />
+
+  <zope:adapter
+        name="referred_listing.html"
+        for="loops.interfaces.IConcept
+             zope.publisher.interfaces.browser.IBrowserRequest"
+        provides="zope.interface.Interface"
+        factory="cyberapps.knowledge.browser.person.ReferredListing"
+        permission="zope.View" />
+
+  <zope:adapter
+        name="jobdescription.html"
+        for="loops.interfaces.IConcept
+             zope.publisher.interfaces.browser.IBrowserRequest"
+        provides="zope.interface.Interface"
+        factory="cyberapps.knowledge.browser.report.JobDescription"
+        permission="zope.View" />
+
+  <browser:page
+        name="job_report.html"
+        for="cyberapps.knowledge.interfaces.IJobPosition"
+        class="cyberapps.knowledge.browser.report.JobReport"
+        permission="zope.View" />
+
+</configure>

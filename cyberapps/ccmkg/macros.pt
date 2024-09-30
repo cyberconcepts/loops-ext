@@ -1,0 +1,34 @@
+<!-- cyberapps.ccmkg project references listing -->
+
+<metal:listing define-macro="listing">
+    <h2 tal:content="item/title"
+        tal:attributes="ondblclick python: item.openEditWindow('configure.html')">
+      Something</h2><br />
+    <table tal:define="result item/resultSet">
+      <tbody tal:repeat="row result/getRows">
+        <tal:row define="data row/applyTemplate">
+          <tr tal:repeat="field row/fields">
+            <tal:cell define="attr field/name">
+              <td colspan="2" bgcolor="#d0d0ff"
+                  tal:condition="python: attr == 'title'">
+                <a href="#"
+                   tal:attributes="href python: view.getUrlForTarget(row.context.context);
+                                   title row/context/description">
+                  <b tal:content="data/?attr" />
+                </a>
+              </td>
+              <tal:field tal:condition="python: attr != 'title'">
+                <td width="20%">
+                  <span tal:content="field/title"
+                        i18n:translate="">Fieldname</span>:
+                </td>
+                <td tal:content="data/?attr">Value</td>
+              </tal:field>
+            </tal:cell>
+          </tr>
+          <tr colspan="2"><td>&nbsp;</td></tr>
+        </tal:row>
+      </tbody>
+    </table>
+</metal:listing>
+

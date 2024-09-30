@@ -1,0 +1,340 @@
+<html i18n:domain="cyberapps.knowledge">
+
+
+<metal:persons define-macro="persons"
+               tal:define="dummy item/update">
+  <metal:block use-macro="view/concept_macros/concepttitle" />
+  <metal:buttons use-macro="item/knowledge_macros/select_institution" />
+  <form method="post">
+    <table class="grid"
+           tal:define="persons item/persons">
+      <tal:block condition="persons/master">
+        <tr><td colspan="6"><h3 i18n:translate="">label_managers</h3></td></tr>
+        <tr metal:use-macro="item/template/macros/person_headline" />
+        <tr tal:repeat="person persons/master">
+          <metal:person use-macro="item/template/macros/person" />
+        </tr>
+      </tal:block>
+      <tal:block condition="persons/member">
+        <tr><td colspan="6"><h3 i18n:translate="">label_employees</h3></td></tr>
+        <tr metal:use-macro="item/template/macros/person_headline" />
+        <tr tal:repeat="person persons/member">
+          <metal:person use-macro="item/template/macros/person" />
+        </tr>
+      </tal:block>
+      <tal:block condition="persons/other">
+        <tr><td colspan="6"><h3 i18n:translate="">label_others</h3></td></tr>
+        <tr metal:use-macro="item/template/macros/person_headline" />
+        <tr tal:repeat="person persons/other">
+          <metal:person use-macro="item/template/macros/person" />
+        </tr>
+      </tal:block>
+    </table>
+    <div metal:use-macro="item/baseTemplate/macros/backbutton" />
+  </form>
+</metal:persons>
+
+
+<tr metal:define-macro="person_headline">
+  <th width="20%"
+      i18n:translate="">label_person_fullname</th>
+  <th width="16%"
+      i18n:translate="">label_jobs_assigned</th>
+  <th width="16%"
+      i18n:translate="">label_qualifications</th>
+  <th width="16%"
+      i18n:translate="">label_skills</th>
+  <th width="16%"
+      i18n:translate="">label_ipskills</th>
+  <th width="16%"
+      i18n:translate="">label_preferences</th>
+</tr>
+
+
+<metal:person define-macro="person">
+  <td><a tal:attributes="href python:view.getUrlForTarget(person)"
+         tal:content="person/title" /></td>
+  <tal:block define="jobs person/jobAssignments">
+    <td>
+      <span i18n:translate=""
+            tal:content="jobs/text" />
+      <a title="edit job assignments"
+         i18n:attributes="title"
+         tal:attributes="href jobs/editUrl">
+        <img tal:attributes="src 
+                    string:${resourceBase}cybertools.icons/page_edit.png" />
+      </a>
+    </td>
+  </tal:block>
+  <tal:block define="qualifications person/qualifications">
+    <td>
+      <span i18n:translate=""
+            tal:content="qualifications/text" />
+      <a title="edit qualifications"
+         i18n:attributes="title"
+         tal:attributes="href qualifications/editUrl">
+        <img tal:attributes="src 
+                    string:${resourceBase}cybertools.icons/page_edit.png" />
+      </a>
+    </td>
+  </tal:block>
+  <tal:block define="skills person/skills">
+    <td>
+      <span i18n:translate=""
+            tal:content="skills/text" />
+      <a title="edit skills"
+         i18n:attributes="title"
+         tal:attributes="href skills/editUrl">
+        <img tal:attributes="src 
+                    string:${resourceBase}cybertools.icons/page_edit.png" />
+      </a>
+    </td>
+  </tal:block>
+  <tal:block define="ipskills person/ipskills">
+    <td>
+      <span i18n:translate=""
+            tal:content="ipskills/text" />
+      <a title="edit ipskills"
+         tal:condition="ipskills/editUrl"
+         i18n:attributes="title"
+         tal:attributes="href ipskills/editUrl">
+        <img tal:attributes="src 
+                    string:${resourceBase}cybertools.icons/page_edit.png" />
+      </a>
+    </td>
+  </tal:block>
+  <tal:block define="preferences person/preferences">
+    <td>
+      <span i18n:translate=""
+            tal:content="preferences/text" />
+      <a title="edit preferences"
+         i18n:attributes="title"
+         tal:attributes="href preferences/editUrl">
+        <img tal:attributes="src 
+                    string:${resourceBase}cybertools.icons/page_edit.png" />
+      </a>
+    </td>
+  </tal:block>
+</metal:person>
+
+
+<metal:referred define-macro="referred_listing"
+               tal:define="dummy item/update">
+  <metal:block use-macro="view/concept_macros/concepttitle" />
+  <metal:buttons use-macro="item/knowledge_macros/select_institution" />
+  <form method="post">
+    <table class="grid"
+           tal:define="persons item/persons">
+      <tr tal:repeat="person persons">
+        <td>
+          <a tal:attributes="href person/url|nothing"
+             tal:content="person/title" /> 
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+    <div metal:use-macro="item/baseTemplate/macros/backbutton" />
+  </form>
+</metal:referred>
+
+
+<metal:form define-macro="jobassignmentsform"
+            tal:define="show item/update">
+  <tal:show condition="show">
+    <metal:block use-macro="view/concept_macros/concepttitle" />
+    <div style="font-size: 120%; padding-bottom: 10px">
+      <span i18n:translate="">Organisation/Team</span>:
+      <b tal:content="item/institution/title" />
+    </div>
+    <form method="post">
+      <div tal:repeat="job item/getData">
+        <input type="checkbox" name="assignments:list"
+               tal:attributes="value job/uid;
+                               checked job/checked" />
+        <span tal:content="job/title" />
+      </div>
+      <br />
+      <metal:buttons use-macro="item/baseTemplate/macros/buttons2back" />
+    </form>
+  </tal:show>
+</metal:form>
+
+
+<metal:form define-macro="qualificationsform">
+  <metal:block use-macro="view/concept_macros/concepttitle" />
+  <form method="post"
+        tal:define="data item/getData;
+                    texts item/getTexts">
+    <tal:qualifications define="fname string:qualifications">
+      <tal:text define="info texts/1|nothing"
+                condition="info">
+        <div class="noprint"
+             tal:content="structure info/text" />
+      </tal:text>
+      <br />
+      <table class="jpdesc_qualif" width="100%">
+        <tr class="grid headline">
+          <td width="35%"
+              i18n:translate="">label_category</td>
+          <td width="30%"
+              i18n:translate="">label_knowledge_level</td>
+          <td width="35%"
+              i18n:translate="">label_certificate</td>
+        </tr>
+        <tal:quitem repeat="row data">
+          <tr class="grid">
+            <td colspan="3">
+                <input type="hidden"
+                       tal:attributes="name string:$fname.key:records;
+                                       value row/key;" />
+                <span class="label"
+                      tal:content="row/label" />
+                <div class="description noprint"
+                     tal:content="row/desc" />
+            </td>
+          </tr>
+          <tal:group repeat="field python:row['schema'] or [None]">
+            <tr class="grid"
+                tal:condition="field">
+              <td tal:content="field/label" />
+              <td tal:content="field/level" />
+              <td i18n:translate="">label_certificate</td>
+            </tr>
+            <tr class="grid"
+                tal:repeat="textRow python:range(3)">
+              <td class="input"
+                  tal:attributes="colspan python:field and '1' or '2'">
+                <select data-dojo-type="dijit/form/ComboBox"
+                        style="width: 100%"
+                        tal:condition="row/subitems"
+                        tal:attributes="name string:$fname.value:list:records;
+                                        value python:row['value'][textRow]">
+                  <option selected></option>
+                  <option tal:repeat="value row/subitems"
+                          tal:content="value/title"></option>
+                </select>
+                <input tal:condition="not:row/subitems"
+                       tal:attributes="name string:$fname.value:list:records;
+                                       value python:row['value'][textRow]" />
+              </td>
+              <td class="input"
+                  tal:condition="field">
+                <tal:field define="name string:qu_${field/key};
+                                   macro field/type;
+                                   value field/value">
+                  <metal:input use-macro="item/baseTemplate/macros/?macro" />
+                </tal:field>
+              </td>
+              <td class="input"
+                  tal:define="voc row/certVocabulary">
+                <select data-dojo-type="dijit/form/ComboBox"
+                        style="width: 100%"
+                        tal:condition="voc"
+                        tal:attributes="name string:$fname.cert:list:records;
+                                        value python:row['cert'][textRow]">
+                  <option tal:repeat="vitem voc"
+                          tal:content="vitem" />
+                </select>
+                <input tal:condition="not:voc"
+                       tal:attributes="name string:$fname.cert:list:records;
+                                       value python:row['cert'][textRow]" />
+              </td>
+            </tr>
+          </tal:group>
+        </tal:quitem>
+      </table>
+    </tal:qualifications>
+    <br />
+    <metal:buttons use-macro="item/baseTemplate/macros/buttons" />
+  </form>
+</metal:form>
+
+
+<metal:form define-macro="skillsform">
+  <metal:block use-macro="view/concept_macros/concepttitle" />
+  <form method="post"
+        tal:define="data item/getData;
+                    texts item/getTexts">
+    <tal:skills define="fname string:skills">
+      <tal:text define="info texts/1|nothing"
+                condition="info">
+        <div class="noprint"
+             tal:content="structure info/text" />
+      </tal:text>
+      <br />
+      <table class="jpdesc_qualif" width="100%">
+        <tr class="grid headline">
+          <td i18n:translate="">label_skills</td>
+          <td width="20%" class="center" colspan="5"
+              i18n:translate="">label_experience</td>
+          <td width="20%" class="center" colspan="5"
+              i18n:translate="">label_interest</td>
+        </tr>
+        <tr class="grid">
+          <td></td>
+          <td tal:repeat="value python:range(5)"
+              i18n:attributes="title"
+              tal:attributes="title string:option_exp_$value;
+                              class python:
+                repeat['value'].end() and 'rbcolumnlast' or 'rbcolumn';"
+              tal:content="python:value + 1"></td>
+          <td tal:repeat="value python:range(5)"
+              i18n:attributes="title"
+              tal:attributes="title string:option_int_$value;
+                              class python:
+                repeat['value'].end() and 'rbcolumnlast' or 'rbcolumn'"
+              tal:content="python:value + 1"></td>
+        </tr>
+        <tal:quitem define="row data"
+                    condition="row">
+          <tr class="grid"
+              tal:repeat="textRow python:range(15)">
+            <td>
+              <input type="hidden"
+                     tal:attributes="name string:$fname:list;
+                                     value textRow" />
+              <select data-dojo-type="dijit/form/ComboBox"
+                      tal:condition="row/subitems"
+                      tal:attributes="name string:$fname.$textRow.value:record;
+                                      value python:row['value'][textRow]">
+                <option selected></option>
+                <option tal:repeat="value row/subitems"
+                        tal:content="value/title"></option>
+              </select>
+              <input tal:condition="not:row/subitems"
+                     tal:attributes="name string:$fname.$textRow.value:record;
+                                     value python:row['value'][textRow]" />
+            </td>
+            <td tal:repeat="value python:range(5)"
+                tal:attributes="class python:
+                    repeat['value'].end() and 'rbcolumnlast' or 'rbcolumn'">
+                <input type="radio" style="width: auto"
+                       i18n:attributes="title"
+                       tal:attributes="name string:$fname.$textRow.exp:record;
+                                       title string:option_exp_$value;
+                                       value value;
+                                       checked python:
+                                          str(value) == row['exp'][textRow]" />
+            </td>
+            <td tal:repeat="value python:range(5)"
+                tal:attributes="class python:
+                    repeat['value'].end() and 'rbcolumnlast' or 'rbcolumn'">
+                <input type="radio" style="width: auto"
+                       i18n:attributes="title"
+                       tal:attributes="name string:$fname.$textRow.int:record;
+                                       title string:option_int_$value;
+                                       value value;
+                                       checked python:
+                                          str(value) == row['int'][textRow]" />
+            </td>
+          </tr>
+        </tal:quitem>
+      </table>
+    </tal:skills>
+    <br />
+    <metal:buttons use-macro="item/baseTemplate/macros/buttons" />
+  </form>
+</metal:form>
+
+
+</html>

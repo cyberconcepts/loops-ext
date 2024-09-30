@@ -1,0 +1,241 @@
+msgid ""
+msgstr ""
+
+"Project-Id-Version: 0.0.1\n"
+"POT-Creation-Date: 2014-08-08 12:00 CET\n"
+"PO-Revision-Date: 2016-10-10 12:00 CET\n"
+"Last-Translator: Helmut Merz <helmutm@cy55.de>\n"
+"Language-Team: cyberapps.knowledge developers <helmutm@cy55.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: kwrite\n"
+
+msgid "Jobs / Positions"
+msgstr "Stellen"
+
+msgid "Create Job"
+msgstr "Stelle anlegen"
+
+msgid "Create a New Job / Position"
+msgstr "Eine neue Stelle anlegen"
+
+msgid "Back"
+msgstr "Zurück"
+
+msgid "Back to Resource Management Page"
+msgstr "Zurück zur Ressourcenmanagement-Übersichtsseite"
+
+# job positions
+
+msgid "label_jobposition_title"
+msgstr "Stellenbezeichnung"
+
+msgid "label_jpdescription"
+msgstr "Stellenbeschreibung"
+
+msgid "Created at"
+msgstr "Erstellt am"
+
+msgid "Responsible"
+msgstr "Verantwortlich"
+
+msgid "Next Review"
+msgstr "Nächste Überprüfung"
+
+msgid "option_review_0"
+msgstr "in 6 Monaten"
+
+msgid "option_review_1"
+msgstr "in 9 Monaten"
+
+msgid "option_review_2"
+msgstr "in 12 Monaten"
+
+msgid "option_review_3"
+msgstr "in 18 Monaten"
+
+msgid "option_review_4"
+msgstr "in 24 Monaten"
+
+# requirements
+
+msgid "label_qualifications_required"
+msgstr "Sollprofil Qualifikationen"
+
+msgid "label_ipskills_required"
+msgstr "Sollprofil Kompetenzen"
+
+msgid "label_persondata"
+msgstr "Ist-Profile"
+
+msgid "label_ipskills_number_selected"
+msgstr "Anzahl der ausgewählten Kompetenzen:"
+
+# persons
+
+msgid "label_managers"
+msgstr "Leitung"
+
+msgid "label_employees"
+msgstr "Mitarbeiter/innen"
+
+msgid "label_others"
+msgstr "Weitere Personen"
+
+msgid "label_person_fullname"
+msgstr "Name"
+
+msgid "label_jobs_assigned"
+msgstr "Stelle(n)"
+
+msgid "label_qualifications"
+msgstr "Qualifikationen"
+
+msgid "label_skills"
+msgstr "Fähigkeiten"
+
+msgid "label_ipskills"
+msgstr "Kompetenzen"
+
+msgid "label_professional_experience"
+msgstr "Berufserfahrung"
+
+msgid "label_certificate"
+msgstr "Nachweis"
+
+msgid "label_experience"
+msgstr "Erfahrung"
+
+msgid "label_interest"
+msgstr "Interesse"
+
+msgid "label_preferences"
+msgstr "Präferenzen"
+
+msgid "option_cert_0"
+msgstr "Zertifikat"
+
+msgid "option_cert_1"
+msgstr "Zeugnis"
+
+msgid "option_cert_2"
+msgstr "Teilnahmebescheinigung"
+
+msgid "option_cert_3"
+msgstr "Immatrikulationsbescheinigung"
+
+msgid "option_cert_4"
+msgstr "Ausbildungsvertrag"
+
+msgid "option_exp_0"
+msgstr "1 - Damit habe ich ein wenig Erfahrung"
+
+msgid "option_exp_1"
+msgstr "2"
+
+msgid "option_exp_2"
+msgstr "3"
+
+msgid "option_exp_3"
+msgstr "4"
+
+msgid "option_exp_4"
+msgstr "5 - Damit habe ich sehr viel Erfahrung"
+
+msgid "option_int_0"
+msgstr "1 - Interessiert mich ein wenig"
+
+msgid "option_int_1"
+msgstr "2"
+
+msgid "option_int_2"
+msgstr "3"
+
+msgid "option_int_3"
+msgstr "4"
+
+msgid "option_int_4"
+msgstr "5 - Interessiert mich sehr"
+
+# forms / fields
+
+msgid "label_category"
+msgstr "Kategorie"
+
+msgid "label_knowledge_level"
+msgstr "Ausprägungsgrad"
+
+msgid "label_requirement"
+msgstr "Erforderlich/Wünschenswert"
+
+msgid "option_req_0"
+msgstr "-"
+
+msgid "option_req_1"
+msgstr "wünschenswert"
+
+msgid "option_req_2"
+msgstr "erforderlich"
+
+# state / buttons
+
+msgid "to be done"
+msgstr "Ausstehend"
+
+msgid "draft"
+msgstr "In Arbeit"
+
+msgid "active"
+msgstr "Fertig"
+
+msgid "edit job description"
+msgstr "Stellenbeschreibung bearbeiten"
+
+msgid "edit profile"
+msgstr "Profil bearbeiten"
+
+msgid "button_save"
+msgstr "Zwischenspeichern"
+
+msgid "button_activate"
+msgstr "Freigeben"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "delete job position"
+msgstr "Stelle löschen"
+
+msgid "onclick_delete_jobposition"
+msgstr "return confirm('Wollen Sie die Stelle mit allen zugehörigen Daten wirklich löschen?')"
+
+msgid "copy job position"
+msgstr "Stelle kopieren"
+
+msgid "onclick_copy_jobposition"
+msgstr "return confirm('Wollen Sie die Stelle mit allen zugehörigen Daten kopieren?')"
+
+# reports
+
+msgid "select_person"
+msgstr "Person für Einzelauswertung auswählen"
+
+msgid "all_persons"
+msgstr "Auswertung für alle anzeigen"
+
+msgid "qualifications_required"
+msgstr "Anforderungen"
+
+msgid "ipskills_required"
+msgstr "Soll-Wert"
+
+msgid "label_skillValues"
+msgstr "Selbsteinschätzung"
+
+msgid "label_refValues"
+msgstr "Fremdeinschätzung"
+

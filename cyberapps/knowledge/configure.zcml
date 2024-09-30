@@ -1,0 +1,80 @@
+<configure
+   xmlns:zope="http://namespaces.zope.org/zope"
+   xmlns:i18n="http://namespaces.zope.org/i18n"
+   i18n_domain="cyberapps.knowledge">
+
+  <i18n:registerTranslations directory="locales" />
+
+  <zope:adapter factory="cyberapps.knowledge.data.JobPosition" trusted="True" />
+  <zope:class class="cyberapps.knowledge.data.JobPosition">
+    <require permission="zope.View"
+             interface="cyberapps.knowledge.interfaces.IJobPosition" />
+    <require permission="zope.ManageContent"
+             set_schema="cyberapps.knowledge.interfaces.IJobPosition" />
+  </zope:class>
+
+  <zope:adapter factory="cyberapps.knowledge.data.JPDescription" trusted="True" />
+  <zope:class class="cyberapps.knowledge.data.JPDescription">
+    <require permission="zope.View"
+             interface="cyberapps.knowledge.interfaces.IJPDescription" />
+    <require permission="zope.ManageContent"
+             set_schema="cyberapps.knowledge.interfaces.IJPDescription" />
+  </zope:class>
+
+  <zope:adapter factory="cyberapps.knowledge.data.IPSkillsRequired" trusted="True" />
+  <zope:class class="cyberapps.knowledge.data.IPSkillsRequired">
+    <require permission="zope.View"
+             interface="cyberapps.knowledge.interfaces.IIPSkillsRequired" />
+    <require permission="zope.ManageContent"
+             set_schema="cyberapps.knowledge.interfaces.IIPSkillsRequired" />
+  </zope:class>
+
+  <zope:adapter factory="cyberapps.knowledge.data.QualificationsRequired" 
+                trusted="True" />
+  <zope:class class="cyberapps.knowledge.data.QualificationsRequired">
+    <require permission="zope.View"
+             interface="cyberapps.knowledge.interfaces.IQualificationsRequired" />
+    <require permission="zope.ManageContent"
+             set_schema="cyberapps.knowledge.interfaces.IQualificationsRequired" />
+  </zope:class>
+
+  <zope:adapter factory="cyberapps.knowledge.data.Qualification" trusted="True"
+                provides="cyberapps.knowledge.interfaces.IQualification" />
+  <zope:class class="cyberapps.knowledge.data.Qualification">
+    <require permission="zope.View"
+             interface="cyberapps.knowledge.interfaces.IQualification" />
+    <require permission="zope.ManageContent"
+             set_schema="cyberapps.knowledge.interfaces.IQualification" />
+  </zope:class>
+
+  <zope:adapter factory="cyberapps.knowledge.data.QualificationsRecorded" 
+                trusted="True" />
+  <zope:class class="cyberapps.knowledge.data.QualificationsRecorded">
+    <require permission="zope.View"
+             interface="cyberapps.knowledge.interfaces.IQualificationsRecorded" />
+    <require permission="zope.ManageContent"
+             set_schema="cyberapps.knowledge.interfaces.IQualificationsRecorded" />
+  </zope:class>
+
+  <zope:adapter factory="cyberapps.knowledge.data.SkillsRecorded" 
+                trusted="True" />
+  <zope:class class="cyberapps.knowledge.data.SkillsRecorded">
+    <require permission="zope.View"
+             interface="cyberapps.knowledge.interfaces.ISkillsRecorded" />
+    <require permission="zope.ManageContent"
+             set_schema="cyberapps.knowledge.interfaces.ISkillsRecorded" />
+  </zope:class>
+
+  <zope:adapter factory="cyberapps.knowledge.data.IPSkillsQuestionnaire"
+                provides="cyberapps.knowledge.interfaces.IIPSkillsQuestionnaire" 
+                trusted="True" />
+  <zope:class class="cyberapps.knowledge.data.IPSkillsQuestionnaire">
+    <require permission="zope.View"
+             interface="cyberapps.knowledge.interfaces.IIPSkillsQuestionnaire" />
+    <require permission="zope.ManageContent"
+             set_schema="cyberapps.knowledge.interfaces.IIPSkillsQuestionnaire" />
+  </zope:class>
+
+  <include package=".browser" />
+
+</configure>

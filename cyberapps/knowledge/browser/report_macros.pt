@@ -1,0 +1,350 @@
+<html i18n:domain="cyberapps.knowledge">
+
+
+<metal:jobs define-macro="jobs"
+            tal:define="dummy item/update">
+  <metal:block use-macro="view/concept_macros/concepttitle" />
+  <metal:buttons use-macro="item/knowledge_macros/select_institution" />
+  <div tal:repeat="pos item/positions">
+    <a tal:attributes="href python:item.getItemUrl(pos)"
+       tal:content="pos/title" />
+  </div>
+  <div metal:use-macro="item/baseTemplate/macros/backbutton" />
+</metal:jobs>
+
+
+<metal:jobdesc define-macro="jobdescription">
+  <metal:block use-macro="view/concept_macros/concepttitle" />
+  <div tal:define="data item/getData;
+                   texts item/getTexts">
+    <table style="width: auto">
+      <tr>
+        <td><b><span i18n:translate="">Created at</span>:</b></td>
+        <td tal:content="data/header/date|nothing"></td>
+      </tr>
+      <tr>
+        <td><b><span i18n:translate="">Responsible</span>:</b></td>
+        <td tal:content="data/header/responsible|nothing"></td>
+      </tr>
+      <tr tal:condition="data/header/review|nothing">
+        <td><b><span i18n:translate="">Next Review</span>:</b></td>
+        <td tal:content="data/header/reviewDate|nothing"></td>
+      </tr>
+    </table>
+    <br />
+    <tal:administrative define="fname string:administrative">
+      <tal:text define="info texts/?fname|nothing"
+                condition="info">
+        <h3 style="width: 700px" 
+            tal:content="info/title" />
+      </tal:text>
+      <table class="grid jpdesc_admin" width="100%">
+        <tr tal:repeat="row data/?fname">
+          <td>
+            <div tal:content="row/label" />
+          </td>
+          <td class="input" width="60%"
+              tal:content="row/text">
+          </td>
+        </tr>
+      </table>
+    </tal:administrative>
+    <br />
+    <tal:workdesc define="fname string:workdesc">
+      <tal:text define="info texts/?fname|nothing"
+                condition="info">
+        <h3 tal:content="info/title" />
+      </tal:text>
+      <table class="jpdesc_workdesc" width="100%">
+        <tal:wditem repeat="row data/?fname">
+          <tr class="label">
+            <td colspan="2">
+              <span tal:content="row/label" />:
+            </td>
+          </tr>
+          <tal:text repeat="textRow python:range(5)">
+            <tr class="grid"
+                tal:define="value python:row['text'][textRow]"
+                tal:condition="value">
+              <td class="center" style="width: 2em"
+                  tal:define="number python:textRow + 1"
+                  tal:content="string:$number.">1.</td>
+              <td class="input"
+                  tal:content="value"></td>
+            </tr>
+          </tal:text>
+        </tal:wditem>
+      </table>
+    </tal:workdesc>
+    <br />
+    <tal:qualifications define="fname string:qualifications">
+      <h3>3. <span i18n:translate="label_qualifications" /></h3>
+      <table class="jpdesc_qualif">
+        <tr class="grid headline">
+          <td i18n:translate="">label_category</td>
+          <td i18n:translate="">label_knowledge_level</td>
+          <td width="10%"
+              i18n:translate="">label_requirement</td>
+        </tr>
+        <tal:quitem repeat="row data/?fname">
+          <tr class="grid">
+            <td colspan="3">
+                <span class="label"
+                      tal:content="row/label" />
+            </td>
+          </tr>
+          <tal:group repeat="field python:row['schema'] or [None]">
+            <tr class="grid"
+                tal:condition="field">
+              <td tal:content="field/label" />
+              <td tal:content="field/level" />
+              <td i18n:translate="">label_requirement</td>
+            </tr>
+            <tal:row repeat="textRow python:range(3)">
+              <tr class="grid"
+                  tal:define="value python:row['value'][textRow]"
+                  tal:condition="value">
+                <td class="input"
+                    tal:attributes="colspan python:field and '1' or '2'"
+                    tal:content="value">
+                </td>
+                <td class="input"
+                    tal:condition="field"
+                    tal:content="python:field['value'][textRow]">
+                </td>
+                <td class="input"
+                    i18n:translate=""
+                    tal:define="value python:row['req'][textRow]"
+                    tal:content="string:option_req_$value">
+                </td>
+              </tr>
+            </tal:row>
+          </tal:group>
+        </tal:quitem>
+      </table>
+    </tal:qualifications>
+    <br />
+    <tal:ipskills define="fname string:ipskills">
+      <h3>4. <span i18n:translate="label_ipskills" /></h3>
+      <table style="width: 100%"
+             tal:define="fname string:ipskills">
+        <tal:group repeat="parent data/?fname">
+          <tr>
+            <td style="padding-top: 15px; padding-bottom: 8px; font-size: 120%">
+              <b tal:content="parent/label" /></td>
+            <td style="vertical-align: bottom">weniger wichtig</td>
+            <td style="vertical-align: bottom; text-align: right">
+              äußerst wichtig</td>
+          </tr>
+          <tr style="border-top: 1px solid #dddddd; border-bottom: 1px solid #dddddd"
+              tal:repeat="child parent/skills">
+            <td style="width: 70%; vertical-align: top;
+                       padding-top: 0; padding-bottom: 0"
+                tal:content="child/label"
+                tal:attributes="title child/description" />
+            <td colspan="2"
+                style="width: 200px; padding: 0">
+              <table width="100%">
+                <tr>
+                  <td style="border-left: 1px solid #dddddd;
+                             border-right: 1px solid #dddddd;
+                             text-align: center; width: 20%; padding: 2px"
+                      tal:repeat="num python:range(5)"
+                      tal:content="python:
+                              int(child['expected']) == num and (num+1) or ''"
+                      xtal:content="child/expected" />
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </tal:group>
+      </table>
+    </tal:ipskills>
+    <br />&nbsp;<br />
+    <div tal:define="footer texts/footer|nothing"
+         tal:condition="footer"
+         tal:content="structure footer/text"></div>
+  </div>
+</metal:jobdesc>
+
+
+<metal:jobrep define-macro="job_report">
+  <metal:block use-macro="view/concept_macros/concepttitle" />
+  <form method="get"
+        tal:define="persons item/adapted/getPersons"
+        tal:condition="python:len(persons) > 1">
+    <span i18n:translate="select_person">Restrict report to person</span>:
+    <select name="person" id="select_person"
+            onchange="submit()"
+            tal:define="person request/person|nothing">
+      <option value=""
+              i18n:translate="all_persons">All persons</option>
+      <option tal:repeat="row persons"
+              tal:content="row/title"
+              tal:attributes="value row/uid;
+                              selected python:row.uid == person">
+      </option>
+    </select>
+    <br />&nbsp;
+  </form>
+  <div tal:define="data item/getData;
+                   texts item/getTexts">
+    <tal:qualifications define="fname string:qualifications">
+      <h2><span i18n:translate="label_qualifications" /></h2>
+      <table class="jpdesc_qualif">
+        <tal:quitem repeat="row data/?fname">
+          <tr><td colspan="3">&nbsp;</td></tr>
+          <tr>
+            <td colspan="3">
+                <span class="label"
+                      tal:content="row/label" />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <b i18n:translate="qualifications_required">Required</b>
+            </td></tr>
+          <tal:group repeat="field python:row['schema'] or [None]">
+            <tr class="grid"
+                tal:condition="field">
+              <td tal:content="field/label" />
+              <td tal:content="field/level" />
+              <td></td>
+            </tr>
+            <tal:row repeat="textRow python:range(3)">
+              <tr class="grid"
+                  tal:define="value python:row['value'][textRow]"
+                  tal:condition="python:
+                      repeat['textRow'].start() or value">
+                <td class="input"
+                    tal:attributes="colspan python:field and '1' or '2'"
+                    tal:content="value">
+                </td>
+                <td class="input"
+                    tal:condition="field"
+                    tal:content="python:field['value'][textRow]">
+                </td>
+                <td class="input"
+                    i18n:translate=""
+                    tal:define="value python:row['req'][textRow]"
+                    tal:content="string:option_req_$value">
+                </td>
+              </tr>
+            </tal:row>
+          </tal:group>
+          <tal:person repeat="personRow row/personData">
+            <tr colspan="3">
+              <td><b tal:content="personRow/name" /></td>
+            </tr>
+            <tal:group repeat="field python:row['schema'] or [None]">
+              <tal:row repeat="textRow python:range(3)">
+                <tr class="grid"
+                    tal:define="value python:personRow['value'][textRow]"
+                    tal:condition="python:
+                        repeat['textRow'].start() or value">
+                  <td tal:attributes="colspan python:field and '1' or '2'"
+                      tal:content="structure python:value or u'&nbsp;'">blubb</td>
+                  <td tal:condition="field"
+                      tal:content="python:personRow['qu_'+field['key']][textRow]">
+                  </td>
+                  <td tal:define="value python:personRow['cert'][textRow]">
+                    <tal:value condition="value">
+                      <span i18n:translate="label_certificate">Certificate</span>:
+                      <span tal:content="value" />
+                    </tal:value>
+                  </td>
+                </tr>
+              </tal:row>
+            </tal:group>
+          </tal:person>
+        </tal:quitem>
+      </table>
+    </tal:qualifications>
+    <br />
+    <tal:ipskills define="fname string:ipskills">
+      <h2><span i18n:translate="label_ipskills" /></h2>
+      <table style="width: 100%">
+        <tal:group repeat="parent data/?fname">
+          <tr><td colspan="3" />&nbsp;</tr>
+          <tr>
+            <td style="padding-bottom: 6px; font-size: 120%">
+              <b tal:content="parent/label" /></td>
+            <td style="vertical-align: bottom"></td>
+            <td style="vertical-align: bottom; text-align: right; 
+                       padding: 0">
+              <table width="100%">
+                <tr>
+                  <td style="border-left: 1px solid #dddddd;
+                             border-right: 1px solid #dddddd;
+                             text-align: center"
+                      tal:repeat="num python:range(1, 6)"
+                      tal:content="num"></td></tr></table>
+            </td>
+          </tr>
+          <tal:child repeat="child parent/skills">
+            <tr style="border-top: 1px solid #dddddd">
+              <td style="vertical-align: top; padding-top: 0; padding-bottom: 0"
+                  tal:content="child/label"
+                  tal:attributes="title child/description" />
+              <td style="padding-top: 0; padding-bottom: 0">
+                <div i18n:translate="ipskills_required">Required</div>
+              </td>
+              <td style="width: 200px; padding: 0">
+                <table width="100%">
+                  <tr>
+                    <td style="border-left: 1px solid #dddddd;
+                               border-right: 1px solid #dddddd;
+                               text-align: center; width: 20%; padding: 0;
+                               height: 18px"
+                        tal:repeat="num python:range(1, 6)">
+                      <img src="/@@/cybertools.icons/ledyellow.png"
+                           tal:attributes="title child/expStr"
+                           tal:condition="python:child['expected'] == num" />
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr tal:repeat="row child/ipskillsInput"
+                tal:attributes="style python:
+                  repeat['row'].end() and 'border-bottom: 1px solid #dddddd' or None">
+              <td />
+              <td style="padding-top: 0; padding-bottom: 0"
+                  tal:content="row/name" />
+              <td style="width: 200px; padding: 0">
+                <table width="100%">
+                  <tr tal:define="value row/value;
+                                  valStr row/vstr;
+                                  refAvg row/refValues/avg;
+                                  refStr row/refValues/vstr">
+                    <td style="border-left: 1px solid #dddddd;
+                               border-right: 1px solid #dddddd;
+                               text-align: center; width: 20%; padding: 0;
+                               height: 18px"
+                        tal:repeat="num python:range(1, 6)">
+                      <tal:separate condition="python:value != refAvg">
+                        <img src="/@@/cybertools.icons/ledgreen.png"
+                             tal:attributes="title valStr"
+                             tal:condition="python:value == num" />
+                        <img src="/@@/cybertools.icons/ledblue.png"
+                             tal:attributes="title refStr"
+                             tal:condition="python:refAvg == num" />
+                      </tal:separate>
+                      <img src="/@@/cybertools.icons/ledgreenblue.png"
+                           tal:attributes="title string:$valStr;; $refStr"
+                           tal:condition="python:value == refAvg == num" />
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </tal:child>
+        </tal:group>
+      </table>
+    </tal:ipskills>
+  </div>
+  <br />
+</metal:jobrep>
+
+
+</html>

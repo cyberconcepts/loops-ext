@@ -18,9 +18,9 @@ dependencies = [
 
 [project.optional-dependencies]
 
-jwt = ["python_jwt", "jwcrypto"]
+jwt = ["python-jwt", "jwcrypto"]
 
 test = ["zope.testrunner"]
 
 [tool.setuptools]
-packages = ["cco"]
+packages = ["cco", "cyberapps"]

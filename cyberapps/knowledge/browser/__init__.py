@@ -1,0 +1,3 @@
+"""
+cyberapps.knowledge.browser
+"""

@@ -1,0 +1,112 @@
+/*
+
+  Basic settings for knowledge management.
+
+*/
+
+.input input, div.dijitInputField {
+    font-size: 100%;
+    font-family: monospace;
+}
+
+table.grid td, th {
+    vertical-align: top;
+    border: 1px solid black;
+}
+
+tr.grid td, th {
+    vertical-align: top;
+    border: 1px solid black;
+}
+
+tr.grid td.rbcolumn {
+    border-left: none;
+    border-right: none;
+    text-align: center;
+}
+
+tr.grid td.rbcolumn input {
+    margin-top: 0;
+}
+
+tr.grid td.rbcolumnlast {
+    border-left: none;
+    text-align: center;
+}
+
+tr.grid td.rbcolumnlast input {
+    margin-top: 0;
+}
+
+tr.headline td, th {
+    font-size: 110%;
+}
+
+td.optional {
+    color: #666666;
+}
+
+table.jpdesc_admin div.label {
+    font-size: 140%;
+}
+
+table.jpdesc_admin div.description {
+    font-style: italic;
+}
+
+table.jpdesc_admin textarea {
+    border: none;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background-color: #f8f8f8;
+}
+
+table.jpdesc_admin textarea[disabled] {
+    background-color: white;
+}
+
+table.jpdesc_workdesc tr.label td {
+    padding-top: 1.5em;
+}
+
+table.jpdesc_workdesc span.label {
+    font-size: 140%;
+}
+
+table.jpdesc_workdesc div.description {
+    font-style: italic;
+}
+
+table.jpdesc_workdesc td.input input {
+    border: none;
+    width: 100%;
+    padding: 0;
+    background-color: #f8f8f8;
+}
+
+table.jpdesc_qualif tr.label td {
+    padding-top: 1.5em;
+}
+
+table.jpdesc_qualif span.label {
+    font-weight: bold;
+    font-size: 120%;
+}
+
+table.jpdesc_qualif div.description {
+    font-style: italic;
+}
+
+table.jpdesc_qualif input {
+    border: none;
+    width: 100%;
+    padding: 0;
+    background-color: #f8f8f8;
+}
+
+@media print {
+    td.optional {
+        color: Black;
+    }
+}

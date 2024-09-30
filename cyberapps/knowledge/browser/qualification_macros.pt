@@ -1,0 +1,483 @@
+<html i18n:domain="cyberapps.knowledge">
+
+
+<metal:jobpositions define-macro="jobpositions"
+                    tal:define="dummy item/update">
+  <metal:block use-macro="view/concept_macros/concepttitle" />
+  <metal:buttons use-macro="item/knowledge_macros/select_institution" />
+  <form method="post"
+        tal:define="texts item/getTexts">
+    <table class="grid">
+      <tr>
+        <th i18n:translate="">label_jobposition_title</th>
+        <th width="120px"
+            i18n:translate="">label_jpdescription</th>
+        <th width="120px"
+            i18n:translate="">label_qualifications_required</th>
+        <th width="120px"
+            i18n:translate="">label_ipskills_required</th>
+        <th i18n:translate=""
+            tal:condition="nothing">label_persondata</th>
+      </tr>
+      <tr tal:repeat="pos item/positions">
+          <td style="position: relative; width: 40%">
+            <a tal:attributes="href python:view.getUrlForTarget(pos)"
+               tal:content="pos/title" />
+            <span style="position: absolute; right: 5px">
+              <a title="delete job position" onclick="onclick_delete_jobposition"
+                 tal:condition="pos/deleteUrl"
+                 i18n:attributes="title; onclick"
+                 tal:attributes="href pos/deleteUrl">
+                <img tal:attributes="src 
+                            string:${resourceBase}cybertools.icons/page_delete.png" />
+              </a>
+              <a title="copy job position" onclick="onclick_copy_jobposition"
+                 i18n:attributes="title; onclick"
+                 tal:attributes="href pos/copyUrl">
+                <img tal:attributes="src 
+                            string:${resourceBase}cybertools.icons/page_copy.png" />
+              </a>
+            </span>
+          </td>
+          <tal:block define="desc pos/jpDescription">
+            <td style="position: relative">
+              <span i18n:translate=""
+                    tal:content="desc/text" />
+              <a title="edit job description" style="position: absolute; right: 5px"
+                 i18n:attributes="title"
+                 tal:attributes="href desc/editUrl">
+                <img tal:attributes="src 
+                            string:${resourceBase}cybertools.icons/page_edit.png" />
+              </a>
+            </td>
+          </tal:block>
+          <tal:block define="required pos/qualificationsRequired">
+            <td style="position: relative">
+              <span i18n:translate=""
+                    tal:content="required/text" />
+              <a title="edit profile" style="position: absolute; right: 5px"
+                 i18n:attributes="title"
+                 tal:attributes="href required/editUrl">
+                <img tal:attributes="src 
+                            string:${resourceBase}cybertools.icons/page_edit.png" />
+              </a>
+            </td>
+          </tal:block>
+          <tal:block define="required pos/ipskillsRequired">
+            <td style="position: relative">
+              <span i18n:translate=""
+                    tal:content="required/text" />
+              <a title="edit profile" style="position: absolute; right: 5px"
+                 i18n:attributes="title"
+                 tal:attributes="href required/editUrl">
+                <img tal:attributes="src 
+                            string:${resourceBase}cybertools.icons/page_edit.png" />
+              </a>
+            </td>
+          </tal:block>
+          <tal:block define="ipskills pos/ipskills"
+                     condition="nothing">
+            <td>
+              <span i18n:translate=""
+                    tal:content="ipskills/text" />
+            </td>
+          </tal:block>
+      </tr>
+    </table>
+    <div><br />
+      <h3 i18n:translate="">Create a New Job / Position</h3>
+      <tal:text define="info texts/1|nothing"
+                condition="info">
+        <div class="noprint"
+             tal:content="structure info/text" />
+      </tal:text>
+      <span  i18n:translate="">label_jobposition_title</span>:
+      <select data-dojo-type="dijit/form/ComboBox" 
+              id="form_jptitle" name="form_jptitle">
+          <option selected></option>
+          <option tal:repeat="value item/jobTitles"
+                  tal:content="value"></option>
+      </select>
+      <input type="submit" name="create_jobposition"
+             value="Create Job"
+             i18n:attributes="value" />
+    </div>
+    <div metal:use-macro="item/template/macros/backbutton" />
+  </form>
+</metal:jobpositions>
+
+
+<metal:form define-macro="jpdescform">
+  <metal:block use-macro="view/concept_macros/concepttitle" />
+  <form method="post"
+        tal:define="data item/getData;
+                    texts item/getTexts">
+    <table style="width: auto">
+      <tr>
+        <td><b><span i18n:translate="">Created at</span>:</b></td>
+        <td>
+          <input type="text" name="header.date:record"
+                 tal:define="date data/header/date|nothing"
+                 tal:attributes="value python:date or item.todayFormatted()" />
+        </td>
+      </tr>
+      <tr>
+        <td><b><span i18n:translate="">Responsible</span>:</b></td>
+        <td>
+          <input type="text" name="header.responsible:record"
+                   tal:attributes="value data/header/responsible|nothing" />
+        </td>
+      </tr>
+      <tr>
+        <td class="optional">
+          <input type="checkbox" id="header.review"
+                 name="header.review:record" value="yes"
+                 tal:attributes="checked data/header/review|nothing" />
+          <b><label for="header.review"
+                    i18n:translate="">Next Review</label>:</b>
+        </td>
+        <td>
+          <select data-dojo-type="dijit/form/ComboBox"
+                  name="header.reviewDate:record"
+                  tal:attributes="value data/header/reviewDate|nothing">
+            <option selected></option>
+            <option tal:repeat="num python:range(5)"
+                    i18n:translate=""
+                    tal:content="string:option_review_$num"></option>
+          </select>
+        </td>
+      </tr>
+    </table>
+    <br />
+    <tal:administrative define="fname string:administrative">
+      <tal:text define="info texts/?fname|nothing"
+                condition="info">
+        <h3 style="width: 700px" 
+            tal:content="info/title" />
+        <div class="noprint" 
+             tal:content="structure info/text" />
+      </tal:text>
+      <table class="grid jpdesc_admin" width="100%">
+        <tr tal:repeat="row data/?fname"
+            tal:attributes="class python:row['inactive'] and 'noprint' or None">
+          <td class="noprint">
+            <input type="hidden"
+                   tal:attributes="name string:$fname.key:records;
+                                   value row/key;" />
+            <input type="checkbox" value="yes"
+                   tal:condition="row/optional"
+                   tal:attributes="name string:$fname.inactive:records;
+                                   checked row/inactive;
+                                   onclick string:
+                      dojo.byId('${fname}_${repeat/row/index}').setAttribute('style',
+                            'display: ' + (this.checked ? 'none' : 'auto'))" />
+          </td>
+          <td tal:attributes="class python:row['optional'] and 'optional' or None">
+            <div class="label" tal:content="row/label" />
+            <div class="description noprint" 
+                 tal:content="row/desc" />
+          </td>
+          <td class="input" width="60%">
+            <textarea tal:attributes="name string:$fname.text:records;
+                                      id string:${fname}_${repeat/row/index};
+                                      style python:'display: ' +
+                              (row['inactive'] and 'none' or 'auto')"
+                      tal:content="row/text"></textarea>
+          </td>
+        </tr>
+      </table>
+    </tal:administrative>
+    <br />
+    <tal:workdesc define="fname string:workdesc">
+      <tal:text define="info texts/?fname|nothing"
+                condition="info">
+        <h3 tal:content="info/title" />
+        <div class="noprint"
+             tal:content="structure info/text" />
+      </tal:text>
+      <table class="jpdesc_workdesc" width="100%">
+        <tal:wditem repeat="row data/?fname">
+          <tbody tal:attributes="class python:row['inactive'] and 'noprint' or None">
+            <tr class="label">
+              <td colspan="2"
+                  tal:attributes="class python:
+                        row['optional'] and 'optional' or None">
+                <input type="hidden"
+                       tal:attributes="name string:$fname.key:records;
+                                       value row/key;" />
+                <input type="checkbox" value="yes" class="noprint"
+                       tal:condition="row/optional"
+                       tal:attributes="name string:$fname.inactive:records;
+                                       checked row/inactive;
+                                   onclick string:
+                      dojo.byId('${fname}_${repeat/row/index}').setAttribute('style',
+                            'display: ' + (this.checked ? 'none' : 'auto'))" />
+                <span class="label"
+                      tal:content="row/label" />:
+                <div class="description noprint"
+                     tal:content="row/desc" />
+              </td>
+            </tr>
+            <tbody tal:attributes="id string:${fname}_${repeat/row/index};
+                                   style python:'display: ' +
+                          (row['inactive'] and 'none' or 'auto')">
+              <tr class="grid"
+                  tal:repeat="textRow python:range(5)">
+                <td class="center" style="width: 2em"
+                    tal:define="number python:textRow + 1"
+                    tal:content="string:$number.">1.</td>
+                <td class="input">
+                  <input tal:attributes="name string:$fname.text:list:records;
+                                         value python:row['text'][textRow];
+                                         disabled python:
+                                row['inactive'] and 'true' or None" /></td>
+              </tr>
+            </tbody>
+            <tr>
+              <td tal:condition="nothing" colspan="2">
+                <button onclick="return false;">+</button></td></tr>
+          </tbody>
+        </tal:wditem>
+      </table>
+    </tal:workdesc>
+    <br />
+    <metal:buttons use-macro="item/template/macros/buttons" />
+  </form>
+</metal:form>
+
+
+<metal:form define-macro="qualificationsform">
+  <metal:block use-macro="view/concept_macros/concepttitle" />
+  <form method="post"
+        tal:define="data item/getData;
+                    texts item/getTexts">
+    <tal:qualifications define="fname string:qualifications">
+      <tal:text define="info texts/1|nothing"
+                condition="info">
+        <div class="noprint"
+             tal:content="structure info/text" />
+      </tal:text>
+      <br />
+      <table class="jpdesc_qualif">
+        <tr class="grid headline">
+          <td i18n:translate="">label_category</td>
+          <td i18n:translate="">label_knowledge_level</td>
+          <td width="10%"
+              i18n:translate="">label_requirement</td>
+        </tr>
+        <tal:quitem repeat="row data">
+          <tr class="grid">
+            <td colspan="3">
+                <input type="hidden"
+                       tal:attributes="name string:$fname.key:records;
+                                       value row/key;" />
+                <span class="label"
+                      tal:content="row/label" />
+                <div class="description noprint"
+                     tal:content="row/desc" />
+            </td>
+          </tr>
+          <tal:group repeat="field python:row['schema'] or [None]">
+            <tr class="grid"
+                tal:condition="field">
+              <td tal:content="field/label" />
+              <td tal:content="field/level" />
+              <td i18n:translate="">label_requirement</td>
+            </tr>
+            <tr class="grid"
+                tal:repeat="textRow python:range(3)">
+              <td class="input"
+                  tal:attributes="colspan python:field and '1' or '2'">
+                <select data-dojo-type="dijit/form/ComboBox"
+                        style="width: 100%"
+                        tal:condition="row/subitems"
+                        tal:attributes="name string:$fname.value:list:records;
+                                        value python:row['value'][textRow]">
+                  <option selected></option>
+                  <option tal:repeat="value row/subitems"
+                          tal:content="value/title"></option>
+                </select>
+                <input style="width: 100%"
+                       tal:condition="not:row/subitems"
+                       tal:attributes="name string:$fname.value:list:records;
+                                       value python:row['value'][textRow]" />
+              </td>
+              <td class="input"
+                  tal:condition="field">
+                <tal:field define="name string:qu_${field/key};
+                                   macro field/type;
+                                   value field/value">
+                  <metal:input use-macro="item/template/macros/?macro" />
+                </tal:field>
+              </td>
+              <td class="input">
+                <select tal:attributes="name string:$fname.req:list:records"
+                        tal:define="svalue python:row['req'][textRow]">
+                  <option tal:repeat="value python:(0, 2, 1)"
+                          i18n:translate=""
+                          tal:attributes="value value;
+                                          selected python:svalue == str(value)"
+                          tal:content="string:option_req_$value" />
+                </select>
+              </td>
+            </tr>
+          </tal:group>
+        </tal:quitem>
+      </table>
+    </tal:qualifications>
+    <br />
+    <metal:buttons use-macro="item/template/macros/buttons" />
+  </form>
+</metal:form>
+
+
+<metal:form define-macro="ipskillsform">
+  <metal:block use-macro="view/concept_macros/concepttitle" />
+  <form method="post"
+        tal:define="data item/getData;
+                    texts item/getTexts">
+    <tal:text define="info texts/1|nothing"
+              condition="info">
+      <div tal:content="structure info/text" />
+    </tal:text>
+    <div>
+      <span i18n:translate="label_ipskills_number_selected">
+        Number of currently selected skills:</span>
+      <span id="ipskills_number_selected"
+            tal:attributes="style python:item.numberSelected > 15 and
+                   'color: Red' or ''"
+            tal:content="item/numberSelected" />
+    </div>
+    <script>
+      function updateNumberSelected(obj) {
+        var node = dojo.byId('ipskills_number_selected');
+        var value = parseInt(node.textContent);
+        var newValue = value + (obj.checked ? 1 : -1);
+        node.childNodes[0].textContent = newValue;
+        node.setAttribute('style', 'color: ' + (newValue > 15 ? 'Red' : 'Black'));
+      }
+    </script>
+    <table style="width: auto"
+           tal:define="fname string:ipskills">
+      <tal:group repeat="parent data">
+        <tr>
+          <td colspan="2" 
+              style="padding-top: 15px; padding-bottom: 8px; font-size: 120%">
+            <b tal:content="parent/label" /></td>
+          <td style="vertical-align: bottom">weniger wichtig</td>
+          <td style="vertical-align: bottom; text-align: right">
+            äußerst wichtig</td>
+        </tr>
+        <tr style="border-top: 1px solid #dddddd; border-bottom: 1px solid #dddddd"
+            tal:repeat="child parent/skills">
+          <td style="width: 5%; vertical-align: top">
+            <input type="hidden"
+                   tal:attributes="name string:$fname.uid:records;
+                                   value child/uid;" />
+            <input type="checkbox" value="yes"
+                   tal:attributes="name string:$fname.selected:records;
+                                   checked child/selected;
+                                   onclick string:
+                      dojo.byId('${fname}_expected_${child/uid}').setAttribute('style',
+                            'display: ' + (this.checked ? 'auto' : 'none'));;
+                      updateNumberSelected(this);;" />
+          </td>
+          <td style="width: 60%; vertical-align: top"
+              tal:content="child/label"
+              tal:attributes="title child/description" />
+          <td colspan="2"
+              style="width: 35%; padding-top: 10px">
+            <div data-dojo-type="dijit/form/HorizontalSlider"
+                 tal:define="disabled python:child['selected'] and 'false' or 'true';
+                             props string:value:${child/expected}, 
+                    minimum:0, maximum:4,
+                    discreteValues:5, intermediateChanges:true,
+                    showButtons:false"
+                 tal:attributes="id string:${fname}_expected_${child/uid};
+                                 name string:$fname.expected:records;
+                                 data-dojo-props props;
+                                 style python:'display: ' +
+                          (child['selected'] and 'auto' or 'none')">
+              <div data-dojo-type="dijit/form/HorizontalRule" 
+                   container="bottomDecoration"
+                   count="5" style="height:5px;"></div>
+              <ol data-dojo-type="dijit/form/HorizontalRuleLabels" 
+                  container="bottomDecoration"
+                  style="height:1.5em;font-size:75%;color:gray;">
+                <li tal:repeat="v python:range(1, 6)"
+                    tal:content="v" />
+              </ol>
+            </div>
+          </td>
+        </tr>
+      </tal:group>
+    </table>
+    <br />
+    <tal:text define="info texts/2|nothing"
+              condition="info">
+      <div tal:content="structure info/text" />
+    </tal:text>
+    <br />
+    <metal:buttons use-macro="item/template/macros/buttons" />
+  </form>
+</metal:form>
+
+
+<metal:input define-macro="combo">
+    <select data-dojo-type="dijit/form/ComboBox"
+            style="width: 100%"
+            tal:attributes="name string:$fname.$name:list:records;
+                            value python:value[textRow]">
+      <option tal:repeat="vitem field/vocabulary"
+              tal:content="vitem" />
+    </select>
+</metal:input>
+
+
+<metal:input define-macro="text">
+    <input tal:attributes="name string:$fname.$name:list:records;
+                           value python:value[textRow]" />
+</metal:input>
+
+
+<div metal:define-macro="buttons"
+     class="noprint">
+    <input type="submit" name="submit_save" value="button_save"
+           i18n:attributes="value" />
+    <input type="submit" name="submit_activate" value="button_activate"
+           i18n:attributes="value" />
+    <input type="submit" name="button_cancel" value="Cancel"
+           i18n:attributes="value" />
+</div>
+
+
+<div metal:define-macro="buttons2"
+     class="noprint">
+    <input type="submit" name="submit_save" value="Save"
+           i18n:attributes="value" />
+    <input type="submit" name="button_cancel" value="Cancel"
+           i18n:attributes="value" />
+</div>
+
+
+<div metal:define-macro="buttons2back"
+     class="noprint">
+    <input type="submit" name="submit_save" value="Save"
+           i18n:attributes="value" />
+    <input type="submit" name="button_cancel" value="Back"
+           i18n:attributes="value" />
+</div>
+
+
+<div metal:define-macro="backbutton">
+    <br />
+    <div class="button">
+      <a title="Back to Resource Management Page"
+         tal:attributes="href item/breadcrumbsParent/targetUrl"
+         i18n:translate=""
+         i18n:attributes="title">Back</a>
+    </div>
+</div>
+
+
+</html>

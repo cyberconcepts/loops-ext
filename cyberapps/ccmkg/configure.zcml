@@ -1,0 +1,36 @@
+<!-- $Id$ -->
+
+<configure
+   xmlns:zope="http://namespaces.zope.org/zope"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="zope">
+
+  <zope:adapter factory="cyberapps.ccmkg.data.ProjectReferenceAdapter"
+                trusted="True" />
+
+  <zope:class class="cyberapps.ccmkg.data.ProjectReferenceAdapter">
+    <require permission="zope.View"
+             interface="cyberapps.ccmkg.interfaces.IProjectReference" />
+    <require permission="zope.ManageContent"
+             set_schema="cyberapps.ccmkg.interfaces.IProjectReference" />
+  </zope:class>
+
+  <zope:adapter
+      name="ccmkg_projects.html"
+      for="loops.interfaces.IConcept
+           zope.publisher.interfaces.browser.IBrowserRequest"
+      provides="zope.interface.Interface"
+      factory="cyberapps.ccmkg.browser.ProjectListing"
+      permission="zope.View"
+      />
+
+  <zope:adapter
+      name="ccmkg_projectref.html"
+      for="loops.interfaces.IConcept
+           zope.publisher.interfaces.browser.IBrowserRequest"
+      provides="zope.interface.Interface"
+      factory="cyberapps.ccmkg.browser.ProjectDetail"
+      permission="zope.View"
+      />
+
+</configure>

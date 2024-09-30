@@ -1,0 +1,56 @@
+# this depends on import of loops/knowledge/data/knowledge_de.dmp
+
+type(u'datatable', u'Datentabelle', viewName=u'',
+    typeInterface=u'loops.table.IDataTable',
+    options=u'action.portlet:edit_concept')
+type(u'ipskill', u'Kompetenz', viewName=u'',
+    options=u'action.portlet:edit_concept')
+type(u'ipskillsrequired', u'Soll-Profil Kompetenzen', viewName=u'', 
+    typeInterface=u'cyberapps.knowledge.interfaces.IIPSkillsRequired',
+    options=u'action.portlet:edit_concept\n'
+            u'organize.stateful:task_states\nportlet_states:task_states')
+type(u'qualificationsrequired', u'Soll-Profil Qualifikationen', viewName=u'', 
+    typeInterface=u'cyberapps.knowledge.interfaces.IQualificationsRequired',
+    options=u'action.portlet:edit_concept\n'
+            u'organize.stateful:task_states\nportlet_states:task_states')
+type(u'jobposition', u'Stelle', viewName=u'', 
+    typeInterface=u'cyberapps.knowledge.interfaces.IJobPosition',
+    options=u'action.portlet:edit_concept')
+type(u'jpdescription', u'Stellenbeschreibung', viewName=u'', 
+    typeInterface=u'cyberapps.knowledge.interfaces.IJPDescription',
+    options=u'action.portlet:edit_concept\n'
+            u'organize.stateful:task_states\nportlet_states:task_states')
+type(u'qualification', u'Qualifikation', viewName=u'',
+    options=u'action.portlet:edit_concept')
+type(u'qualificationsrecorded', u'Ist-Profil Qualifikationen', viewName=u'', 
+    typeInterface=u'cyberapps.knowledge.interfaces.IQualificationsRecorded',
+    options=u'action.portlet:edit_concept\n'
+            u'organize.stateful:task_states\nportlet_states:task_states')
+type(u'skillsrecorded', u'Ist-Profil F\xe4higkeiten', viewName=u'', 
+    typeInterface=u'cyberapps.knowledge.interfaces.ISkillsRecorded',
+    options=u'action.portlet:edit_concept\n'
+            u'organize.stateful:task_states\nportlet_states:task_states')
+
+# data tables
+#concept(u'jpdesc_administrative', u'Stellenbeschreibung administrativ', u'datatable',
+#        columns=[u'number', u'key', u'label', u'description', u'optional'])
+#concept(u'jpdesc_workdesc', u'Stellenbeschreibung Tätigkeit', 
+#        u'datatable',
+#        columns=[u'number', u'key', u'label', u'description', u'optional'])
+#concept(u'jpdesc_qualifications', u'Qualifikationen', 
+#        u'datatable',
+#        columns=[u'number', u'key', u'label', u'description', u'optional'])
+#concept(u'job_names', u'Stellenbezeichnungen', u'datatable')
+
+# structure
+child(u'general', u'jpdescription', u'standard')
+child(u'general', u'ipskill', u'standard')
+child(u'general', u'ipskillsrequired', u'standard')
+child(u'general', u'qualificationsrequired', u'standard')
+child(u'general', u'jobposition', u'standard')
+child(u'general', u'qualificationsrecorded', u'standard')
+child(u'general', u'skillsrecorded', u'standard')
+
+# records
+#records(u'qualification', 
+#        u'cyberapps.knowledge.qualification.data.QualificationRecord')
