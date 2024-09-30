@@ -1,0 +1,151 @@
+<configure
+   xmlns:zope="http://namespaces.zope.org/zope"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="cco.webapi">  
+
+  <!-- security -->
+
+  <zope:permission
+      id="cco.webapi.Get"
+      title="[cco-webapi-get-permission] cco.webapi: GET" />
+
+  <zope:permission
+      id="cco.webapi.Post"
+      title="[cco-webapi-post-permission] cco.webapi: POST" />
+
+  <zope:permission
+      id="cco.webapi.Put"
+      title="[cco-webapi-put-permission] cco.webapi: PUT" />
+
+  <zope:role id="cco.webapi.All"
+        title="[cco-webapi-all-role] cco.webapi: All" />
+  <zope:grant role="cco.webapi.All" permission="cco.webapi.Get" />
+  <zope:grant role="cco.webapi.All" permission="cco.webapi.Post" />
+  <zope:grant role="cco.webapi.All" permission="cco.webapi.Put" />
+
+  <!-- node classes -->
+
+  <zope:class class="cco.webapi.node.ApiNode">
+    <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+    <factory id="cco.webapi.ApiNode" description="API Node" />
+    <require
+        permission="zope.View"
+        interface="cco.webapi.interfaces.IApiNode" />
+    <require
+        permission="zope.ManageContent"
+        set_schema="cco.webapi.interfaces.IApiNode" />
+  </zope:class>
+
+  <!-- admin views -->
+
+  <browser:addform
+      label="Add API Node"
+      name="AddCcoApiNode.html"
+      content_factory="cco.webapi.node.ApiNode"
+      schema="cco.webapi.interfaces.IApiNode"
+      fields="title description nodeType viewName"
+      template="browser/add.pt"
+      permission="zope.ManageContent">
+    <widget field="description" height="2" />
+    <widget field="body" height="3" />
+  </browser:addform>
+
+  <browser:addMenuItem
+      class="cco.webapi.node.ApiNode"
+      title="API Node"
+      description="An API node allows access via REST+JSON"
+      permission="zope.ManageContent"
+      view="AddCcoApiNode.html" />
+
+  <browser:editform
+      label="Edit API Node"
+      name="edit.html"
+      schema="cco.webapi.interfaces.IApiNode"
+      fields="title description nodeType viewName"
+      for="cco.webapi.interfaces.IApiNode"
+      template="browser/edit.pt"
+      permission="zope.ManageContent">
+    <widget field="description" height="2" />
+    <widget field="body" height="3" />
+  </browser:editform>
+
+  <!-- API traverser and views/handlers -->
+
+  <zope:adapter
+      for="cco.webapi.interfaces.IApiNode
+           zope.publisher.interfaces.http.IHTTPRequest"
+      provides="zope.publisher.interfaces.browser.IBrowserPublisher"
+      factory="cco.webapi.server.ApiTraverser"
+      permission="zope.Public" />
+
+  <browser:page
+      name="index.html"
+      for="cco.webapi.interfaces.IApiNode"
+      class="cco.webapi.server.ApiHandler"
+      permission="cco.webapi.Get" />
+
+  <zope:adapter
+      name="PUT"
+      for="cco.webapi.interfaces.IApiNode
+           zope.publisher.interfaces.http.IHTTPRequest"
+      provides="zope.interface.Interface"
+      factory="cco.webapi.server.ApiHandler"
+      permission="cco.webapi.Put" />
+
+  <zope:adapter
+      name="api_target"
+      for="loops.interfaces.IConceptSchema
+           zope.publisher.interfaces.http.IHTTPRequest"
+      provides="zope.interface.Interface"
+      factory="cco.webapi.server.TargetHandler"
+      permission="cco.webapi.Get" />
+
+  <zope:adapter
+      name="api_container"
+      for="loops.interfaces.IConceptSchema
+           zope.publisher.interfaces.http.IHTTPRequest"
+      provides="zope.interface.Interface"
+      factory="cco.webapi.server.ContainerHandler"
+      permission="cco.webapi.Get" />
+
+  <zope:adapter
+      name="api_target"
+      for="loops.interfaces.ITypeConcept
+           zope.publisher.interfaces.http.IHTTPRequest"
+      provides="zope.interface.Interface"
+      factory="cco.webapi.server.TypeHandler"
+      permission="cco.webapi.Get" />
+
+  <zope:adapter
+      name="api_container"
+      for="loops.interfaces.ITypeConcept
+           zope.publisher.interfaces.http.IHTTPRequest"
+      provides="zope.interface.Interface"
+      factory="cco.webapi.server.TypeHandler"
+      permission="cco.webapi.Get" />
+
+  <zope:adapter
+      name="api_integrator_query"
+      for="loops.interfaces.ITypeConcept
+           zope.publisher.interfaces.http.IHTTPRequest"
+      provides="zope.interface.Interface"
+      factory="cco.webapi.server.IntegratorQuery"
+      permission="cco.webapi.Get" />
+
+  <zope:adapter
+      name="api_integrator_class_query"
+      for="loops.interfaces.ITypeConcept
+           zope.publisher.interfaces.http.IHTTPRequest"
+      provides="zope.interface.Interface"
+      factory="cco.webapi.server.IntegratorClassQuery"
+      permission="cco.webapi.Get" />
+
+  <zope:adapter
+      name="api_integrator_item_query"
+      for="loops.interfaces.IConceptSchema
+           zope.publisher.interfaces.http.IHTTPRequest"
+      provides="zope.interface.Interface"
+      factory="cco.webapi.server.IntegratorItemQuery"
+      permission="cco.webapi.Get" />
+
+</configure>

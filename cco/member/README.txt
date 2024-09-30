@@ -45,7 +45,7 @@ TAN entry form) is executed.
   >>> req.setTraversalStack(['++auth++2factor'])
 
   >>> scp.extractCredentials(req)
-  '2fa_tan_form.html?a=...&h=...&b=...'
+  '2fa_tan_form.html?h=...&a=...&b=...'
 
 What if we enter data for authentication phase 2? No authentication
 because the hashes don't match.
