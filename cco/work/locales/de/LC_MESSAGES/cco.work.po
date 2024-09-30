@@ -1,0 +1,47 @@
+msgid ""
+msgstr ""
+
+"Project-Id-Version: 1.0\n"
+"POT-Creation-Date: 2017-10-23 12:00 CET\n"
+"PO-Revision-Date: 2017-11-14 12:00 CET\n"
+"Last-Translator: Helmut Merz <helmutm@cy55.de>\n"
+"Language-Team: cyberconcepts.org team <team@cyberconcepts.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: sublime_text\n"
+
+# forms
+
+msgid "label_estimatedEffort"
+msgstr "Geschätzter Aufwand (Stunden)"
+
+msgid "desc_estimatedEffort"
+msgstr "Der geschätzte Aufwand für das Projekt in Stunden."
+
+msgid "label_chargedEffort"
+msgstr "Aufwand lt. Rechnung (Stunden)"
+
+msgid "desc_chargedEffort"
+msgstr "Der dem Kunden in Rechnung gestellte Aufwand in Stunden."
+
+msgid "label_actualEffort"
+msgstr "Tatsächlicher Aufwand (Stunden)"
+
+msgid "desc_actualEffort"
+msgstr "Der tatsächliche Aufwand in Stunden für das Projekt."
+
+# reports
+
+msgid "colheader_task"
+msgstr "Projekt/Aufgabe"
+
+msgid "colheader_estimatedEffort"
+msgstr "Geschätzter Aufwand"
+
+msgid "colheader_chargedEffort"
+msgstr "Aufwand lt. Rechnung"
+
+msgid "colheader_actualEffort"
+msgstr "Tatsächlicher Aufwand"
+
