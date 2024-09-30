@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<metal:main define-macro="html"
+            tal:condition="view/update">
+<html lang="de-de"
+      i18n:domain="cco.skin.r2"
+      tal:define="controller nocall:view/@@controller;
+                  resourceBase controller/resourceBase;
+                  item nocall:view;
+                  homeUrl view/topMenu/url;
+                  level python:1">
+
+<head>
+	<base tal:attributes="href request/URL" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="author" content="cyberconcepts.org team" />
+  <meta name="description"
+        tal:attributes="content view/headTitle" />
+  <meta name="generator" content="BlueBream + loops" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <title metal:define-macro="title"
+         tal:content="options/title|view/headTitle">loops
+  </title>
+
+  <link rel="icon" type="image/png"
+        tal:attributes="href string:${resourceBase}favicon.png" />
+
+  <link rel="stylesheet" type="text/css"
+        tal:attributes="href string:${resourceBase}cco_r2.css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" 
+        tal:attributes="href string:${resourceBase}cco_r2.css/bootstrap-theme.min.css" />
+  <link rel="stylesheet" type="text/css" 
+        tal:attributes="href string:${resourceBase}cco_r2.css/font-awesome.min.css" />
+
+  <link rel="stylesheet" type="text/css" 
+        tal:attributes="href string:${resourceBase}cco_r2.css/base.css" />
+
+  <metal:css define-slot="custom-css" />
+
+  <meta name="viewport" 
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<style type="text/stylesheet">
+		@-webkit-viewport   { width: device-width; }
+		@-moz-viewport      { width: device-width; }
+		@-ms-viewport       { width: device-width; }
+		@-o-viewport        { width: device-width; }
+		@viewport           { width: device-width; }
+	</style>
+  <meta name="HandheldFriendly" content="true" />
+  <meta name="apple-mobile-web-app-capable" content="YES" />
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" 
+              data-toggle="collapse" data-target="#navbar" 
+              aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <i class="fa fa-bars"></i>
+      </button>
+      <a style="padding-right: 50px"
+         tal:attributes="title view/headTitle;
+                         href homeUrl">
+        <metal:img define-slot="logo">
+          <img src="/@@/cco_r2.images/logo.jpg"
+               tal:attributes="src string:${resourceBase}cco_r2.images/logo.jpg;
+                               alt view/headTitle" />
+        </metal:img>
+      </a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse" style="margin-top: 6px">
+      <ul class="nav navbar-nav"
+          tal:define="item nocall:view/menu">
+        <tal:menu repeat="item item/menuItems">
+          <li tal:define="subitems item/menuItems"
+              tal:attributes="class python:'dropdown ' + 
+                    (view.active(item) and 'active' or '')">
+            <a tal:condition="subitems"
+               tal:attributes="href item/url;
+                               data-target item/url"
+               class="dropdown-toggle" data-toggle="dropdown" 
+               role="button"
+               aria-haspopup="true" aria-expanded="false">
+              <span tal:content="item/context/title" />
+               <span class="caret"></span></a>
+            <a tal:condition="not:subitems"
+               tal:attributes="href item/url">
+              <span tal:content="item/context/title" /></a>
+            <ul class="dropdown-menu"
+                tal:condition="subitems">
+              <tal:menu repeat="item subitems">
+                <li tal:define="glyph python:
+                      (view.getViewForTarget(item.context.target).
+                          options('title_glyph_icon') or [''])[0]"
+                    tal:attributes="class python:
+                          view.selected(item) and 'active' or ''">
+                  <a tal:attributes="href item/url">
+                    <span tal:attributes="class glyph"></span>
+                    <span tal:content="item/context/title" /></a>
+                </li>
+              </tal:menu>
+            </ul>
+          </li>
+        </tal:menu>
+      </ul>
+      <div class="head-right">
+        <div class="dropdown navbar-right">
+            <button class="btn navbar-btn dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-search"></i>
+            </button>
+            <div class="dropdown-menu search" role="menu" style="padding:10px"
+                 aria-labelledby="head-search">
+                <form method="get" class="form-inline form-search"
+                      tal:attributes="action string:$homeUrl/search.html">
+                    <input name="search.text" id="search-text"
+                           maxlength="200" class="form-control" 
+                           type="search" size="0" placeholder="label_searchtext"
+                           i18n:translate="placeholder" />
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<tal:block define="item nocall:view/item"
+           condition="nocall:item">
+      <div class="container">
+            <article>
+              <section class="article-content clearfix">
+                <metal:item use-macro="item/macro" />
+              </section>
+            </article>
+      </div>
+      <tal:parts repeat="part item/subparts">
+        <tal:part define="item nocall:part/item">
+          <metal:block use-macro="part/macro" />
+        </tal:part>
+      </tal:parts>
+</tal:block>
+
+<footer class="wrap">			
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">				
+          <ol class="breadcrumb"
+              tal:define="crumbs view/breadcrumbs"
+              tal:condition="crumbs">
+          	<li class="active">
+              <span class="hasTooltip">
+                <i class="fa fa-map-marker" data-toggle="tooltip" 
+                   title="Current page"
+                   i18n:attributes="title">
+                </i>
+              </span>
+            </li>
+            <li tal:repeat="crumb crumbs">
+              <a class="pathway"
+                 tal:attributes="href crumb/url"
+                 tal:content="crumb/label"></a>
+              <span class="divider"></span>
+            </li>
+          </ol>
+          <div class="custom">
+          	<p style="text-align: center;">
+              &copy; Copyright <span tal:replace="view/currentYear" />, 
+              <metal:copyright define-slot="copyright">
+                <span tal:replace="view/copyright" />
+              </metal:copyright><br />
+              <a tal:attributes="href string:${view/topMenu/url}/impressum">
+                Impressum</a>
+              <tal:dp condition="python:view.hasTopPage('datenschutz')"> - 
+                <a tal:attributes="href string:${view/topMenu/url}/datenschutz">
+                Datenschutzerklärung</a></tal:dp>
+              <br />Powered by
+              <b><a href="https://www.cyberconcepts.org">the cyberconcepts.org Web Application Platform</a></b>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+	</section>
+</footer>
+
+<script type="text/javascript"
+        tal:attributes="src string:${resourceBase}cco_r2.js/jquery.min.js">
+</script>
+<script type="text/javascript"
+        tal:attributes="src string:${resourceBase}cco_r2.js/bootstrap.min.js">
+</script>  
+<script>
+  $(function() {
+      $(".dropdown").hover(
+          function(){ $(this).addClass('open') },
+          function(){ $(this).removeClass('open') }
+      );
+  });
+</script>
+</body>
+</html>
+</metal:main>

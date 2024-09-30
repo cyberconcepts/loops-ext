@@ -1,0 +1,37 @@
+<configure
+    xmlns:zope="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:i18n="http://namespaces.zope.org/i18n">
+
+  <i18n:registerTranslations directory="locales" />
+
+  <!-- CCO_R2 skin -->
+
+  <zope:interface
+        interface="cco.skin.r2.CCO_R2"
+        type="zope.publisher.interfaces.browser.IBrowserSkinType"
+        name="CCO_R2" />
+
+  <browser:resourceDirectory name="cco_r2.css" directory="css" />
+  <browser:resourceDirectory name="cco_r2.js" directory="js" />
+  <browser:resourceDirectory name="cco_r2.images" directory="images" />
+  <browser:resourceDirectory name="cco_r2.fonts" directory="fonts" />
+
+  <browser:resource name="favicon.png" file="images/favicon.png"
+        layer="cco.skin.r2.CCO_R2" />
+
+  <browser:page name="controller"
+        for="zope.publisher.interfaces.browser.IBrowserView"
+        class="cco.skin.r2.controller.Controller"
+        permission="zope.Public"
+        layer="cco.skin.r2.CCO_R2" />
+
+  <zope:adapter
+        name="lobo_layout"
+        for="loops.interfaces.IConcept
+             cco.skin.r2.CCO_R2"
+        provides="zope.interface.Interface"
+        factory="cco.skin.r2.browser.LoboLayout"
+        permission="zope.View" />
+
+</configure>

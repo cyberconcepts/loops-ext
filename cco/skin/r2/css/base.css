@@ -1,0 +1,24 @@
+/* base.css */
+
+div.navbar-header {
+    margin-left: 0!important;
+}
+
+.panel-header {
+    border: none;
+    box-shadow: none;
+}
+
+.panel-header .panel-body {
+    padding: 0;
+}
+
+.panel-default {
+    text-align: center;
+    min-height: 10em;
+}
+
+.row img {
+    margin-bottom: 25px;
+    /*border-radius: 4px;*/
+}

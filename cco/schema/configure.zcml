@@ -1,0 +1,30 @@
+<configure
+   xmlns:zope="http://namespaces.zope.org/zope"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   xmlns:i18n="http://namespaces.zope.org/i18n"
+   i18n_domain="cco.schema">
+  
+  <i18n:registerTranslations directory="locales" />
+
+  <zope:adapter factory="cco.schema.base.SchemaController"
+                trusted="True" />
+
+  <zope:class class="cco.schema.base.SchemaController">
+    <require permission="zope.View"
+             interface="cco.schema.interfaces.ISchemaController" />
+    <require permission="zope.ManageContent"
+             set_schema="cco.schema.interfaces.ISchemaController" />
+  </zope:class>
+
+  <!--<zope:adapter factory="cco.schema.processor.SchemaProcessor" />-->
+  <!--has to be declared separately (e.g. in application's ZCML)
+      to be able to use an application-specific subclass -->
+  <!-- example (e.g. in .../src/main/configure.zcml): 
+  <include package="cco.schema" file="schemaprocessor.zcml" />-->
+
+  <!-- field definitions -->
+
+    <zope:adapter factory="cco.schema.field.UrlFieldInstance"
+                  name="url" />
+
+</configure>

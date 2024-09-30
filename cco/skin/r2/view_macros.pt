@@ -1,0 +1,58 @@
+<html i18n:domain="cco.skin.r2">
+
+
+<metal:content define-macro="lobo-main"
+               tal:define="images python:list(item.images)">
+
+  <header class="article-header">
+    <h1 tal:content="item/title" />
+  </header>
+
+  <div class="row"
+       tal:condition="images">
+    <div class="col-md-4" style="vertical-align: middle"
+         tal:define="image python:item.getImageData(images[0])">
+      <img class="img-responsive img-rounded"
+           tal:attributes="src image/src" >
+    </div>
+    <div class="col-md-8" style="vertical-align: middle">
+      <div class="panel-header panel">
+        <div class="panel-body">
+          <div tal:content="structure item/renderedText" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row"
+       tal:condition="not:images">
+    <div class="col-md-12" style="vertical-align: middle">
+      <div class="panel-header panel">
+        <div class="panel-body">
+          <div tal:content="structure item/renderedText" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+</metal:content>
+
+<metal:content define-macro="lobo-part2">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4" style="vertical-align: middle"
+           tal:repeat="related item/children">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <a tal:attributes="href python:view.getUrlForTarget(related);
+                               title related/title"
+               tal:content="structure related/renderedDescription" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</metal:content>
+
+
+</html>

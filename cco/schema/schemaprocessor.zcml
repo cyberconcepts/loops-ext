@@ -1,0 +1,5 @@
+<configure xmlns:zope="http://namespaces.zope.org/zope">
+  
+  <zope:adapter factory="cco.schema.processor.SchemaProcessor" />
+
+</configure>

@@ -1,0 +1,9 @@
+type(u'schema_controller', u'Schema Controller',
+    options=u'action.portlet:edit_concept',
+    typeInterface='cco.schema.interfaces.ISchemaController', 
+    viewName=u'')
+
+concept(u'use_schema', u'use schema', u'predicate')
+
+child(u'system', u'schema_controller', u'standard')
+child(u'system', u'use_schema', u'standard')
