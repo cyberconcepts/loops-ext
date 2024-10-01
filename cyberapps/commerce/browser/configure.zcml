@@ -1,0 +1,84 @@
+<!-- $Id$ -->
+
+<configure
+   xmlns:zope="http://namespaces.zope.org/zope"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="cyberapps.commerce">
+
+  <zope:module module="cyberapps.commerce.browser.action" />
+
+  <!-- products, categories, ... -->
+
+  <zope:adapter
+      name="commerce_simple_listing.html"
+      for="loops.interfaces.IConcept
+           zope.publisher.interfaces.browser.IBrowserRequest"
+      provides="zope.interface.Interface"
+      factory="cyberapps.commerce.browser.base.SimpleListing"
+      permission="zope.View" />
+
+  <zope:adapter
+      name="commerce_product.html"
+      for="loops.interfaces.IConcept
+           zope.publisher.interfaces.browser.IBrowserRequest"
+      provides="zope.interface.Interface"
+      factory="cyberapps.commerce.browser.product.ProductView"
+      permission="zope.View" />
+
+  <zope:adapter
+      name="commerce_category.html"
+      for="loops.interfaces.IConcept
+           zope.publisher.interfaces.browser.IBrowserRequest"
+      provides="zope.interface.Interface"
+      factory="cyberapps.commerce.browser.product.CategoryView"
+      permission="zope.View" />
+
+  <browser:page
+      name="create_product_page.html"
+      for="loops.interfaces.INode"
+      class="cyberapps.commerce.browser.product.CreateProductPage"
+      permission="zope.ManageContent" />
+
+  <browser:page
+      name="edit_product_page.html"
+      for="loops.interfaces.INode"
+      class="cyberapps.commerce.browser.product.EditProductPage"
+      permission="zope.ManageContent" />
+
+  <zope:adapter
+      name="create_product"
+      for="loops.browser.node.NodeView
+           zope.publisher.interfaces.browser.IBrowserRequest"
+      factory="cyberapps.commerce.browser.product.CreateProduct"
+      permission="zope.ManageContent" />
+
+  <browser:page
+      name="create_category_page.html"
+      for="loops.interfaces.INode"
+      class="cyberapps.commerce.browser.product.CreateCategoryPage"
+      permission="zope.ManageContent" />
+
+  <browser:page
+      name="edit_category_page.html"
+      for="loops.interfaces.INode"
+      class="cyberapps.commerce.browser.product.EditCategoryPage"
+      permission="zope.ManageContent" />
+
+  <zope:adapter
+      name="create_category"
+      for="loops.browser.node.NodeView
+           zope.publisher.interfaces.browser.IBrowserRequest"
+      factory="cyberapps.commerce.browser.product.CreateCategory"
+      permission="zope.ManageContent" />
+
+  <!-- customers, ... -->
+
+  <zope:adapter
+      name="commerce_customer.html"
+      for="loops.interfaces.IConcept
+           zope.publisher.interfaces.browser.IBrowserRequest"
+      provides="zope.interface.Interface"
+      factory="cyberapps.commerce.browser.customer.CustomerView"
+      permission="zope.View" />
+
+</configure>

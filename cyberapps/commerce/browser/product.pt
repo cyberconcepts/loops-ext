@@ -1,0 +1,43 @@
+<!-- $Id$ -->
+
+
+<metal:block define-macro="category">
+
+  <div>
+    <metal:title use-macro="item/conceptMacros/concepttitle" />
+  </div>
+  <h2 i18n:translate="">Subcategories</h2>
+  <dl tal:repeat="related item/subcategories">
+    <tal:item define="data related/data">
+      <dt>
+        <a tal:content="related/title"
+           tal:attributes="href python: view.getUrlForTarget(related);">Category</a>
+      </dt>
+      <dd class="description"
+          tal:define="description related/description"
+          tal:condition="description">
+        <span tal:content="structure related/renderedDescription">Description</span>
+      </dd>
+    </tal:item>
+  </dl>
+
+  <h2 i18n:translate="">Products</h2>
+  <dl tal:repeat="related item/products">
+    <tal:item define="data related/data">
+      <dt>
+        <a tal:content="related/title"
+           tal:attributes="href python: view.getUrlForTarget(related);">Product</a>
+      </dt>
+      <dd class="description"
+          tal:define="description related/description"
+          tal:condition="description">
+        <span tal:content="structure related/renderedDescription">Description</span>
+      </dd>
+    </tal:item>
+  </dl>
+
+  <metal:resources use-macro="view/concept_macros/conceptresources" />
+
+</metal:block>
+
+

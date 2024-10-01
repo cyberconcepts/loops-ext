@@ -1,0 +1,32 @@
+<!-- $Id$ -->
+
+<configure
+   xmlns:zope="http://namespaces.zope.org/zope"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="zope">
+
+  <zope:adapter factory="cyberapps.bsm.data.SchoolInfoAdapter"
+                trusted="True" />
+
+  <zope:class class="cyberapps.bsm.data.SchoolInfoAdapter">
+    <require permission="zope.View"
+             interface="cyberapps.bsm.interfaces.ISchoolInfo" />
+    <require permission="zope.ManageContent"
+             set_schema="cyberapps.bsm.interfaces.ISchoolInfo" />
+  </zope:class>
+
+  <browser:page
+      for="loops.interfaces.IConcept"
+      name="bsm_school_detail.html"
+      class="cyberapps.bsm.browser.SchoolDetails"
+      permission="zope.View"
+      />
+
+  <browser:page
+      for="loops.interfaces.INode"
+      name="bsm_schools.html"
+      class="cyberapps.bsm.browser.SchoolListing"
+      permission="zope.View"
+      />
+
+</configure>

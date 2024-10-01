@@ -1,0 +1,95 @@
+<!-- $Id$ -->
+
+<configure
+   xmlns:zope="http://namespaces.zope.org/zope"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="cyberapps.commerce">
+
+  <include package="cybertools.commerce" />
+
+  <zope:adapter factory="cyberapps.commerce.shop.Shop"
+                provides="cyberapps.commerce.interfaces.IShop"
+                trusted="True" />
+  <zope:class class="cyberapps.commerce.shop.Shop">
+    <require permission="zope.View"
+             interface="cyberapps.commerce.interfaces.IShop" />
+    <require permission="zope.ManageContent"
+             set_schema="cyberapps.commerce.interfaces.IShop" />
+  </zope:class>
+
+  <zope:adapter factory="cyberapps.commerce.product.Product"
+                provides="cyberapps.commerce.interfaces.IProduct"
+                trusted="True" />
+  <zope:class class="cyberapps.commerce.product.Product">
+    <require permission="zope.View"
+             interface="cyberapps.commerce.interfaces.IProduct" />
+    <require permission="zope.ManageContent"
+             set_schema="cyberapps.commerce.interfaces.IProduct" />
+  </zope:class>
+
+  <zope:adapter factory="cyberapps.commerce.product.Category"
+                provides="cyberapps.commerce.interfaces.ICategory"
+                trusted="True" />
+  <zope:class class="cyberapps.commerce.product.Category">
+    <require permission="zope.View"
+             interface="cyberapps.commerce.interfaces.ICategory" />
+    <require permission="zope.ManageContent"
+             set_schema="cyberapps.commerce.interfaces.ICategory" />
+  </zope:class>
+
+  <zope:adapter factory="cyberapps.commerce.product.Manufacturer"
+                trusted="True" />
+  <zope:class class="cyberapps.commerce.product.Manufacturer">
+    <require permission="zope.View"
+             interface="cybertools.commerce.interfaces.IManufacturer" />
+    <require permission="zope.ManageContent"
+             set_schema="cybertools.commerce.interfaces.IManufacturer" />
+  </zope:class>
+
+  <zope:adapter factory="cyberapps.commerce.customer.Customer"
+                provides="cyberapps.commerce.interfaces.ICustomer"
+                trusted="True" />
+  <zope:class class="cyberapps.commerce.customer.Customer">
+    <require permission="zope.View"
+             interface="cyberapps.commerce.interfaces.ICustomer" />
+    <require permission="zope.ManageContent"
+             set_schema="cyberapps.commerce.interfaces.ICustomer" />
+  </zope:class>
+
+  <zope:adapter factory="cyberapps.commerce.customer.Address"
+                provides="cyberapps.commerce.interfaces.IAddress"
+                trusted="True" />
+  <zope:class class="cyberapps.commerce.customer.Address">
+    <require permission="zope.View"
+             interface="cyberapps.commerce.interfaces.IAddress" />
+    <require permission="zope.ManageContent"
+             set_schema="cyberapps.commerce.interfaces.IAddress" />
+  </zope:class>
+
+  <zope:adapter factory="cyberapps.commerce.order.Order"
+                provides="cyberapps.commerce.interfaces.IOrder"
+                trusted="True" />
+  <zope:class class="cyberapps.commerce.order.Order">
+    <require permission="zope.View"
+             interface="cyberapps.commerce.interfaces.IOrder" />
+    <require permission="zope.ManageContent"
+             set_schema="cyberapps.commerce.interfaces.IOrder" />
+  </zope:class>
+
+  <!--<zope:adapter factory="cyberapps.commerce.order.OrderItems" />-->
+
+  <zope:class class="cyberapps.commerce.order.OrderItem">
+    <require permission="zope.View"
+             interface="cybertools.commerce.interfaces.IOrderItem" />
+    <require permission="zope.ManageContent"
+             set_schema="cybertools.commerce.interfaces.IOrderItem" />
+  </zope:class>
+
+  <!-- setup -->
+
+  <zope:adapter factory="cyberapps.commerce.setup.SetupManager"
+                name="cyberapps.commerce" />
+
+  <include package=".browser" />
+
+</configure>

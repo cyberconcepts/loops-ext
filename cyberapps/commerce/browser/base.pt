@@ -1,0 +1,22 @@
+<!-- $Id$ -->
+
+
+<metal:block define-macro="simple_listing">
+  <div>
+    <metal:title use-macro="item/conceptMacros/concepttitle" />
+  </div>
+  <metal:listing define-macro="base_listing">
+      <dl tal:repeat="related item/children">
+          <dt>
+            <a tal:content="related/title"
+               tal:attributes="href python: view.getUrlForTarget(related);">Something</a>
+          </dt>
+          <dd class="description"
+              tal:define="description related/description"
+              tal:condition="description">
+            <span tal:content="structure related/renderedDescription">Description</span>
+          </dd>
+      </dl>
+  </metal:listing>
+</metal:block>
+

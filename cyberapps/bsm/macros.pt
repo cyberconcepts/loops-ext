@@ -1,0 +1,30 @@
+<!-- $Id$ -->
+
+<metal:detail define-macro="detail"
+              tal:define="result item/resultSet">
+
+    <h2 tal:content="item/title"
+        tal:attributes="ondblclick item/openEditWindow">
+      Something</h2><br />
+    <table>
+      <tr tal:repeat="cell item/cells">
+        <td width="20%">
+          <span tal:content="cell/field/title"
+                i18n:translate="">Fieldname</span>:
+        </td>
+        <td>
+          <a href="#"
+             tal:omit-tag="not:cell/url"
+             tal:attributes="href cell/url;
+                             title cell/urlTitle">
+            <span tal:content="cell/text">Value</span>
+          </a>
+        </td>
+      </tr>
+    </table><br />
+
+    <div tal:attributes="class string:content-$level;">
+      <metal:fields use-macro="item/conceptMacros/macros/conceptresources" />
+    </div>
+
+</metal:detail>
