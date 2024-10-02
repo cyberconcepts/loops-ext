@@ -1,7 +1,6 @@
-#! /usr/bin/python
+# cco.common.tests
 
-"""
-Tests for the 'cco.webapi' package.
+""" Tests for the 'cco.webapi' package.
 """
 
 import io
@@ -53,7 +52,7 @@ class Test(unittest.TestCase):
 def test_suite():
     flags = doctest.NORMALIZE_WHITESPACE | doctest.ELLIPSIS
     return unittest.TestSuite((
-        unittest.makeSuite(Test),
+        unittest.TestLoader().loadTestsFromTestCase(Test),
         doctest.DocFileSuite('README.rst', optionflags=flags,
                      setUp=setUp, tearDown=tearDown),
         ))

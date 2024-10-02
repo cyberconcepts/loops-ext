@@ -12,7 +12,7 @@ keywords = ["loops"]
 authors = [{name = "Helmut Merz", email = "helmutm@cy55.de"}]
 
 dependencies = [
-	"loops",
+	"loops[server]",
 	"requests",
 ]
 

@@ -1,4 +1,4 @@
-#! /usr/bin/python
+# cco.schema.tests
 
 """
 Tests for the 'cco.schema' package.
@@ -47,7 +47,7 @@ class Test(unittest.TestCase):
 def test_suite():
     flags = doctest.NORMALIZE_WHITESPACE | doctest.ELLIPSIS
     return unittest.TestSuite((
-        unittest.makeSuite(Test),
+        unittest.TestLoader().loadTestsFromTestCase(Test),
         doctest.DocFileSuite('README.md', optionflags=flags,
                      setUp=setUp, tearDown=tearDown),
         ))

@@ -35,7 +35,7 @@ class Test(unittest.TestCase):
 def test_suite():
     flags = doctest.NORMALIZE_WHITESPACE | doctest.ELLIPSIS
     return unittest.TestSuite((
-        unittest.makeSuite(Test),
+        unittest.TestLoader().loadTestsFromTestCase(Test),
         doctest.DocFileSuite('README.txt', optionflags=flags,
                      setUp=setUp, tearDown=tearDown),
         ))
