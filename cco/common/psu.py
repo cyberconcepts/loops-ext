@@ -31,15 +31,20 @@ from cybertools.util.date import date2TimeStamp, strptime
 from cybertools.util.jeep import Jeep
 from loops.common import adapted, baseObject
 from loops.util import getObjectForUid, getUidForObject, getCatalog, reindex
-#from xxx import config
 
 os.environ['NLS_LANG'] = 'German_Germany.UTF8'
+
+try:
+    import config
+except ImportError:
+    print('*** config file could not be loaded!')
+    config = None
 
 
 sc = Jeep()     # shortcuts
 
-def setup(loopsRootPath='sites/loops', config=None, zopeconf='zope.conf'):
-    global conn, sm, smdefault, intids, pau, loopsRoot, sc
+def setup(loopsRootPath='sites/loops', zopeconf='zope.conf', config=config):
+    global conn, root, sm, smdefault, intids, pau, loopsRoot, sc
     conn = wsgi.config(zopeconf).open()
     root = conn.root()['Application']
     setSite(root)
@@ -49,7 +54,7 @@ def setup(loopsRootPath='sites/loops', config=None, zopeconf='zope.conf'):
     pau = smdefault['PluggableAuthentication']
     user = getattr(config, 'shell_user', 'zope.manager')
     password = (getattr(config, 'shell_pw', None) or
-                raw_input('Enter manager password: '))
+                input('Enter manager password: '))
     login(Principal(user, password, u'Manager'))
     loopsRoot = root
     for name in loopsRootPath.split('/'):
@@ -58,6 +63,9 @@ def setup(loopsRootPath='sites/loops', config=None, zopeconf='zope.conf'):
     sc.concepts = loopsRoot['concepts']
     for name in ('standard', 'hasType',):
         sc[name] = sc.concepts[name]
+
+def close():
+    conn.close()
 
 
 def byuid(uid):
@@ -185,10 +193,21 @@ def loop(message, objects, fct, **kw):
 # indexing
 
 def reindex_objects(objs, **kw):
-    catalog = util.getCatalog(objs[0])
+    catalog = getCatalog(objs[0])
     def do_reindex(obj, info):
         util.reindex(obj, catalog)
     loop('reindex %s objects' % len(objs), objs, do_reindex, **kw)
+
+def reindex_all(root, step=1000):
+    catalog = getCatalog(root)
+    def _updateObj(params, info):
+        uid, obj = params
+        for index in catalog.values():
+            index.index_doc(uid, obj)
+    info = startup('Indexing all objects', step=step)
+    for uid, obj in catalog._visitSublocations():
+        update(_updateObj, (uid, obj), info)
+    finish(info)
 
 
 # some common repair tasks
