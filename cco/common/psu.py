@@ -1,31 +1,31 @@
-# psu - paster shell utilities
-# use this from (e.g.):
-#
-#   bin/paster shell deploy8.ini
+# psu - python shell utilities
+# use this from a Python command line (in a loops / bluebrem virtual environment).
 #
 # then:
 #
 #   from cco.common import psu
-#   from custom.config import myproject as config
-#   psu.setup(root, 'path/to/loopsRoot', config)
+#   import config
+#   psu.setup('path/to/loopsRoot', config, zopeconf='zope-0.conf')
 #   obj = psu.byuid('578457950')
 #
 
 import os
 from transaction import commit, abort
+from zope.app import wsgi
 from zope.app.authentication.principalfolder import Principal
-from zope.app.component.hooks import setSite
-from zope.app.container.contained import ObjectAddedEvent, ObjectRemovedEvent
 from zope.cachedescriptors.property import Lazy
 from zope.catalog.interfaces import ICatalog
+from zope.component.hooks import setSite
+from zope.container.contained import ObjectAddedEvent, ObjectRemovedEvent
 from zope.copypastemove.interfaces import IContainerItemRenamer
 from zope import component
 from zope.event import notify
 from zope.exceptions.interfaces import DuplicationError
+from zope.interface import Interface
 from zope.lifecycleevent import ObjectCreatedEvent, ObjectModifiedEvent
 from zope.publisher.browser import TestRequest as BaseTestRequest
 from zope.security.management import getInteraction, newInteraction, endInteraction
-from zope.interface import Interface
+#from zope.pluggableauth.plugins.principalfolder import PrincipalInfo
 
 from cybertools.util.date import date2TimeStamp, strptime
 from cybertools.util.jeep import Jeep
@@ -38,8 +38,10 @@ os.environ['NLS_LANG'] = 'German_Germany.UTF8'
 
 sc = Jeep()     # shortcuts
 
-def setup(root, loopsRootPath='sites/loops', config=None):
-    global sm, smdefault, intids, pau, loopsRoot, sc
+def setup(loopsRootPath='sites/loops', config=None, zopeconf='zope.conf'):
+    global conn, sm, smdefault, intids, pau, loopsRoot, sc
+    conn = wsgi.config(zopeconf).open()
+    root = conn.root()['Application']
     setSite(root)
     sm = component.getSiteManager(root)
     smdefault = sm['default']
@@ -83,7 +85,7 @@ def notifyRemoved(obj):
 def delete(container, name, docommit=True):
     obj = container.get(name)
     if obj is None:
-        print '*** Object', name, 'not found!'
+        print('*** Object', name, 'not found!')
         return
     notifyRemoved(obj)
     del container[name]
@@ -93,14 +95,14 @@ def delete(container, name, docommit=True):
 def rename(container, old, new, docommit=True):
     obj = container.get(old)
     if obj is None:
-        print '*** Object', old, 'not found!'
+        print('*** Object', old, 'not found!')
         return
     renamer = IContainerItemRenamer(container)
     if new != old:
         try:
             renamer.renameItem(old, new)
         except DuplicationError:
-            print '*** Object', new, 'already exists!'
+            print('*** Object', new, 'already exists!')
     # container[new] = obj
     # notifyAdded(obj)
     notifyModification(obj)
@@ -110,7 +112,7 @@ def rename(container, old, new, docommit=True):
 def move(source, target, name):
     obj = source.get(name)
     if obj is None:
-        print '*** Object', name, 'not found!'
+        print('*** Object', name, 'not found!')
         return
     #notifyRemoved(obj)
     #del source[name]
@@ -124,14 +126,14 @@ def get(container, obj):
         name = obj
         obj = container.get(name)
         if obj is None:
-            print '*** Object', name, 'not found!'
+            print('*** Object', name, 'not found!')
             return None
     return adapted(obj)
 
 # startup, loop, finish...
 
 def startup(msg, **kw):
-    print '***', msg
+    print('***', msg)
     step = kw.pop('step', 10)
     return Jeep(count=0, step=step, message=msg, **kw)
 
@@ -148,20 +150,20 @@ def update(fct, obj, info):
                 objInfo = obj.context.__name__
             except:
                 objInfo = obj
-        print '*** Processing object # %i: %s' % (info.count, objInfo)
+        print('*** Processing object # %i: %s' % (info.count, objInfo))
         if info.get('updated'):
-            print '*** updated: %i.' % info.updated
+            print('*** updated: %i.' % info.updated)
         if info.get('errors'):
-            print '*** errors: %i.' % info.error
+            print('*** errors: %i.' % info.error)
         commit()
     return fct(obj, info)
 
 def finish(info):
-    print '*** count: %i.' % info.count
+    print('*** count: %i.' % info.count)
     if info.get('updated'):
-        print '*** updated: %i.' % info.updated
+        print('*** updated: %i.' % info.updated)
     if info.get('errors'):
-        print '*** errors: %i.' % info.error
+        print('*** errors: %i.' % info.error)
     commit()
 
 def stop_condition(info):
