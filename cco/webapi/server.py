@@ -1,23 +1,6 @@
-#
-#  Copyright (c) 2017 Helmut Merz helmutm@cy55.de
-#
-#  This program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-#
+# cco.webapi.server
 
-"""
-View-like implementations for the REST API.
+""" View-like implementations for the REST API.
 """
 
 from datetime import date
@@ -211,14 +194,14 @@ class TargetBase(ApiCommon, ConceptView):
         return {}
 
     def mapInputFieldNames(self, data):
-        for k1 in data:
+        for k1 in list(data):
             k2 = self.inputFieldMap.get(k1)
             if k2 is not None:
                 data[k2] = data[k1]
                 del data[k1]
 
     def mapOutputFieldNames(self, data):
-        for k1 in data:
+        for k1 in list(data):
             k2 = self.outputFieldMap.get(k1)
             if k2 is not None:
                 data[k2] = data[k1]
