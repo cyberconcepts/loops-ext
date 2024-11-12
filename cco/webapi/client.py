@@ -1,6 +1,4 @@
-#
 # cco.webapi.client
-#
 
 """
 Functions for providieng external services with object data 
@@ -21,7 +19,7 @@ def sendJson(url, payload, cred, method):
     if url.startswith('test:'):
         resp = testing.request(method, url, json=payload, auth=cred)
     else:
-        if isinstance(payload, basestring):
+        if isinstance(payload, str):
             resp = requests.request(
                 method, url, data=payload, auth=cred, timeout=10)
         else:
