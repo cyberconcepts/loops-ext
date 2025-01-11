@@ -13,8 +13,8 @@ _ = MessageFactory('cyberapps.commerce')
 
 
 def sendEMail(subject, message, sender, recipients):
-    if isinstance(message, unicode):
-        message = message.encode('UTF-8')
+    #if isinstance(message, str):
+    #    message = message.encode('UTF-8')
     msg = MIMEText(message, 'plain', 'utf-8')
     msg['Subject'] = subject
     msg['From'] = sender

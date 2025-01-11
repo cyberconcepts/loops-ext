@@ -37,7 +37,7 @@ class OrderItem(BaseOrderItem):
     def getObject(self, ref):
         if isinstance(ref, int):
             return util.getObjectForUid(ref)
-        if isinstance(ref, basestring):
+        if isinstance(ref, str):
             if ref.isdigit:
                 return util.getObjectForUid(ref)
             if ':' in ref:

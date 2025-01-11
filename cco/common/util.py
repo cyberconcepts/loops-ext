@@ -114,7 +114,7 @@ def XLSListReader(f, sheet_index=0,
             col_value = []
             for col in range(sheet.ncols):
                 value = (sheet.cell(row, col).value)
-                value = unicode(value)  # str(int(value))
+                #value = unicode(value)  # str(int(value))
                 col_value.append(value)
             values.append(col_value)
     return values
@@ -137,7 +137,7 @@ sepaCharacters = ('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
 
 
 def replaceNoneSepaCharacters(string, length=None):
-    if not isinstance(string, basestring):
+    if not isinstance(string, str):
         return string
     result = u''
     for s in string:

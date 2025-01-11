@@ -1,9 +1,6 @@
-#
 # cco.processor.transformer
-#
 
-"""
-Transform a data structure (represented by a dictionary )
+""" Transform a data structure (represented by a dictionary )
 """
 
 from datetime import date
@@ -72,14 +69,14 @@ def const(val):
 def int_inv(val):
     if val is None:
         return None
-    if isinstance(val, basestring) and val == '':
+    if isinstance(val, str) and val == '':
         return _invalid
     return int(val)
 
 def float_inv(val):
     if val is None:
         return None
-    if isinstance(val, basestring) and val == '':
+    if isinstance(val, str) and val == '':
         return _invalid
     return float(val)
 
@@ -88,6 +85,6 @@ def iso_date(val, context=None, format='%Y-%m-%d'):
         return None
     if isinstance(val, date):
         return val
-    if isinstance(val, basestring) and val == '':
+    if isinstance(val, str) and val == '':
         return _invalid
     return date(*(time.strptime(val[:10], format)[:3]))
