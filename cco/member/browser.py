@@ -122,9 +122,9 @@ class TanForm(LoginForm):
                             target_language=lang)
         senderInfo = self.globalOptions('email.sender')
         sender = senderInfo and senderInfo[0] or 'info@loops.cy55.de'
-        sender = sender.encode('UTF-8')
-        msg = MIMEText(message.encode('UTF-8'), 'plain', 'UTF-8')
-        msg['Subject'] = subject.encode('UTF-8')
+        #sender = sender.encode('UTF-8')
+        msg = MIMEText(message, 'plain', 'UTF-8')
+        msg['Subject'] = subject
         msg['From'] = sender
         msg['To'] = ', '.join(recipients)
         mailhost = component.getUtility(IMailDelivery, 'Mail')
@@ -316,8 +316,8 @@ class PasswordReset(PasswordChange):
 
     def sendPasswordResetMail(self, sender, recipients=[], subject='',
                               message=''):
-        msg = MIMEText(message.encode('UTF-8'), 'html', 'UTF-8')
-        msg['Subject'] = subject.encode('UTF-8')
+        msg = MIMEText(message, 'html', 'UTF-8')
+        msg['Subject'] = subject
         msg['From'] = sender
         msg['To'] = ', '.join(recipients)
         mailhost = component.getUtility(IMailDelivery, 'Mail')
@@ -390,7 +390,7 @@ class PasswordReset(PasswordChange):
                 domain = self.request.getHeader('HTTP_HOST')
             senderInfo = self.globalOptions('email.sender')
             sender = senderInfo and senderInfo[0] or 'info@loops.cy55.de'
-            sender = sender.encode('UTF-8')
+            #sender = sender.encode('UTF-8')
             self.sendPasswordResetMail(sender, recipients, self.getSubject(),
                                        self.getMessage(token))
             url = '%s?error_message=%s' % (self.url, self.reset_mail_message)
