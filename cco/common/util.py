@@ -10,7 +10,7 @@ from datetime import timedelta, datetime
 from logging import getLogger
 from lxml import etree
 from urllib.parse import urlencode
-from urllib2 import urlopen
+from urllib.request import urlopen
 
 from zope import component
 from zope.i18nmessageid import MessageFactory

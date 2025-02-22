@@ -14,6 +14,7 @@ authors = [{name = "Helmut Merz", email = "helmutm@cy55.de"}]
 dependencies = [
 	"loops[server]",
 	"requests",
+	"xlrd",
 ]
 
 [project.optional-dependencies]
