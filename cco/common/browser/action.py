@@ -52,4 +52,5 @@ class MailToAction(TargetAction):
             except UnicodeEncodeError:
                 return '.'
         s = s[:1000]
-        return urllib.parse.quote(''.join(enc(c) for c in s))
+        return urllib.parse.quote(''.join(s))
+        #return urllib.parse.quote(''.join(enc(c) for c in s))
