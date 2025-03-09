@@ -38,7 +38,7 @@ class RelationField(BaseRelationField):
         return self.getRawValue(row)
 
     def getSortValue(self, row):
-        return self.getValue(row)
+        return self.getValue(row) or ''
 
     def getExportValue(self, row, format=''):
         return self.getValue(row)
