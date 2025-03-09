@@ -67,11 +67,12 @@ class DateField(BaseDateField):
 
     def getSortValue(self, row):
         value = self.getRawValue(row)
-        if value is not None:
+        if value:
             value = date2TimeStamp(value)
             if getattr(self, 'sortDesc', False):
                 value = -value
-        return value
+            return value
+        return 0
 
 
 class IntegerField(BaseIntegerField):
