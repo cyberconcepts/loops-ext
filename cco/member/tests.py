@@ -3,6 +3,9 @@
 """ Tests for the 'cco.member' package.
 """
 
+import os, sys
+sys.path = [os.path.dirname(__file__)] + sys.path # for import of config.py
+
 import os
 import unittest, doctest
 from zope import component

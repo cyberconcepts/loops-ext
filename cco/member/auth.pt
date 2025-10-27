@@ -9,6 +9,11 @@
        i18n:translate=""
        tal:content="request/error_message" />
     <h2 i18n:translate="title_login">Login</h2>
+	<p i18n:domain="loops"
+	   tal:condition="view/oidc_allowed">
+	  <a tal:attributes="href string:/@@auth_login?camefrom=$camefrom"
+         i18n:translate="login-with-oidc">Login with OpenID Connect (Zitadel)</a>
+	</p>
     <div>
       <p i18n:translate="description_login"
          tal:condition="python: principal == 'zope.anybody'">

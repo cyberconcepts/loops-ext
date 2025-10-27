@@ -23,6 +23,7 @@ from zope.publisher.interfaces.http import IHTTPRequest
 from zope.security.interfaces import Unauthorized as DefaultUnauth
 from zope.sendmail.interfaces import IMailDelivery
 
+from scopes.web.auth import oidc
 from cco.member.auth import getCredentials, getPrincipalFromCredentials,\
     getPrincipalForUsername, JWT_SECRET
 from cco.member.interfaces import IPasswordChange, IPasswordReset
@@ -36,11 +37,9 @@ from loops.common import adapted
 from loops.organize.interfaces import IMemberRegistrationManager
 from loops.organize.party import getPersonForUser
 from loops.organize.util import getPrincipalForUserId, getPrincipalFolder
+from loops.server.auth import getAuthMethodCookieValue, getConfigAuthMethod
 
-try:
-    import config
-except ImportError:
-    config = None
+import config
 
 log = logging.getLogger('cco.member.browser')
 
@@ -60,14 +59,36 @@ def validateToken(token, secret=None):
         return True
 
 
-class LoginConcept(ConceptView):
+class LoginBase:
+
+    def __call__(self):
+        if self.authMethod == 'oidc':
+            return self.authOidc()
+        return super(LoginBase, self).__call__()
+
+    @Lazy
+    def authMethod(self):
+        if getConfigAuthMethod() == 'cookie':
+            return getAuthMethodCookieValue(self.request)
+        return 'legacy'
+
+    @Lazy
+    def oidc_Allowed(self):
+        return self.authMethod in ('select', 'oidc')
+
+    def authOidc(self):
+        oidc.Authenticator(self.request).login()
+        return ''
+
+
+class LoginConcept(LoginBase, ConceptView):
 
     @Lazy
     def macro(self):
         return template.macros['login_form']
 
 
-class LoginForm(NodeView):
+class LoginForm(LoginBase, NodeView):
 
     @Lazy
     def macro(self):
