@@ -73,7 +73,7 @@ class LoginBase:
         return 'legacy'
 
     @Lazy
-    def oidc_Allowed(self):
+    def oidc_allowed(self):
         return self.authMethod in ('select', 'oidc')
 
     def authOidc(self):
