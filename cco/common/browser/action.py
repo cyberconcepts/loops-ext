@@ -17,6 +17,7 @@ class MailToAction(TargetAction):
     targetWindow = 'blank'
     bodyAttribute = 'description'
     subjectAttribute = 'title'
+    mailToDelimiter = ', '
 
     @Lazy
     def url(self):
@@ -32,7 +33,7 @@ class MailToAction(TargetAction):
             for receiver in getattr(target, self.receivers):
                 if receiver.email:
                     if prefix:
-                        mailto += ', '
+                        mailto += self.mailToDelimiter
                     mailto += receiver.email
                     prefix = True
         subject = getattr(target, self.subjectAttribute, '')
