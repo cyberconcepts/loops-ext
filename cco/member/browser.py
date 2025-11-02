@@ -66,6 +66,10 @@ class LoginBase:
             return self.authOidc()
         return super(LoginBase, self).__call__()
 
+    def checkAuth(self):
+        if self.authMethod == 'oidc':
+            return self.authOidc()
+
     @Lazy
     def authMethod(self):
         if getConfigAuthMethod() == 'cookie':
