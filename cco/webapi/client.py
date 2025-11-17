@@ -25,8 +25,8 @@ def sendJson(url, payload, cred, method):
         else:
             resp = requests.request(
                 method, url, json=payload, auth=cred, timeout=10)
-    logger.info('sendJson: %s %s -> %s %s.' % (
-        method, url, resp.status_code, resp.text))
+    logger.info('sendJson: %s %s -> %s.' % (
+        method, url, resp.status_code))
     # TODO: check resp.status_code
     #return resp.json(), dict(state='success')
     return resp.content
