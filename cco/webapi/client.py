@@ -19,7 +19,7 @@ def sendJson(url, payload, cred, method):
     if url.startswith('test:'):
         resp = testing.request(method, url, json=payload, auth=cred)
     else:
-        if isinstance(payload, str):
+        if isinstance(payload, (str, bytes)):
             resp = requests.request(
                 method, url, data=payload, auth=cred, timeout=10)
         else:
