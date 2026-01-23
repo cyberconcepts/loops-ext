@@ -7,19 +7,18 @@ from zope.cachedescriptors.property import Lazy
 from zope.interface import implementer
 
 from cybertools.organize.interfaces import IWorkItems
-from loops.common import AdapterBase, adapted, baseObject
+#from cco.storage.loops.common import AdapterBase
+from loops.common import AdapterBase
+from loops.common import adapted, baseObject
 #from loops.organize.task import Task
 from loops.type import TypeInterfaceSourceList
 from loops import util
 from cco.work.interfaces import IProject, ITask
 
-#from cco.storage.loops import common
-
 
 TypeInterfaceSourceList.typeInterfaces += (IProject, ITask)
 
 
-#class TaskBase(common.AdapterBase):
 class TaskBase(AdapterBase):
 
     _contextAttributes = list(ITask)
