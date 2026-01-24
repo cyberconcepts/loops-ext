@@ -12,11 +12,14 @@
        i18n:translate=""
        tal:content="request/error_message" />
     <h2 i18n:translate="title_login">Login</h2>
-	<p i18n:domain="loops"
-	   tal:condition="item/oidc_allowed">
-	  <a tal:attributes="href string:$baseUrl/@@auth_login?camefrom=$camefrom"
-         i18n:translate="login-with-oidc">Login with OpenID Connect (Zitadel)</a>
-	</p>
+	<div i18n:domain="loops"
+	     tal:condition="item/oidc_allowed">
+      <p>
+      <b><a tal:attributes="href string:$baseUrl/@@auth_login?camefrom=$camefrom"
+            i18n:translate="login-with-oidc">Login with OpenID Connect (Zitadel)</a></b>
+      </p>
+      <br><span i18n:translate="login-with-legacy-method">Use legacy login method</span>:
+	</div>
     <div>
       <p i18n:translate="description_login"
          tal:condition="python: principal == 'zope.anybody'">
