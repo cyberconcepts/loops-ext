@@ -6,6 +6,7 @@
              tal:define="principal request/principal/id;
                    baseUrl python:request.URL[-1];
 	   			   camefrom python:request.get('camefrom') or baseUrl;
+                   dummy python:request.form.setdefault('camefrom', baseUrl);
 				   dummy item/checkAuth">
     <p style="color: Red"
        tal:condition="request/error_message|nothing"

@@ -62,12 +62,12 @@ def validateToken(token, secret=None):
 class LoginBase:
 
     def __call__(self):
-        if self.authMethod == 'oidc':
+        if self.isAnonymous and self.authMethod == 'oidc':
             return self.authOidc()
         return super(LoginBase, self).__call__()
 
     def checkAuth(self):
-        if self.authMethod == 'oidc':
+        if self.isAnonymous and self.authMethod == 'oidc':
             return self.authOidc()
 
     @Lazy
